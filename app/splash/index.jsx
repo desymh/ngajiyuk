@@ -29,11 +29,11 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#ffffff',
+    backgroundColor: '#C8E6C9',
   },
   logo: {
-    width: 200,
-    height: 200,
-    borderRadius: 100, // Membuat bulat kalau logomu bentuk persegi
+    width: 195,
+    height: 195,
+    borderRadius: 195, // Membuat bulat kalau logomu bentuk persegi
   }
 });

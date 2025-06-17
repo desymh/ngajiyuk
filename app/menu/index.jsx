@@ -1,52 +1,64 @@
-import { Link } from 'expo-router';
-import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import React from 'react';
+import { View, Text, StyleSheet, TouchableOpacity, Image } from 'react-native';
+import { useRouter } from 'expo-router';
+import { colors, font } from '../../constants/theme';
 
 export default function Menu() {
+  const router = useRouter();
+
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>DoaKu Anak Muslim</Text>
-      <Text style={styles.subtitle}>
-        Belajar doa harian, bacaan sholat, dan Al-Quran dengan mudah!
-      </Text>
+      <Text style={styles.title}>Ngaji Yuk!</Text>
 
-      <Link href="/doa-harian" asChild>
-        <TouchableOpacity style={styles.button}>
-          <Text style={styles.buttonText}>Doa Harian</Text>
-        </TouchableOpacity>
-      </Link>
+      <TouchableOpacity style={styles.button} onPress={() => router.push('/doa-harian')}>
+        <Image source={require('../../assets/anak-berdoa.png')} style={styles.icon} />
+        <Text style={styles.buttonText}>Doa Harian</Text>
+      </TouchableOpacity>
 
-      <Link href="/bacaan-sholat" asChild>
-        <TouchableOpacity style={styles.button}>
-          <Text style={styles.buttonText}>Bacaan Sholat</Text>
-        </TouchableOpacity>
-      </Link>
+      <TouchableOpacity style={styles.button} onPress={() => router.push('/bacaan-sholat')}>
+        <Image source={require('../../assets/anak-sholat.png')} style={styles.icon} />
+        <Text style={styles.buttonText}>Bacaan Sholat</Text>
+      </TouchableOpacity>
 
-      <Link href="/belajar-quran" asChild>
-        <TouchableOpacity style={styles.button}>
-          <Text style={styles.buttonText}>Belajar Al-Quran</Text>
-        </TouchableOpacity>
-      </Link>
-
-      <Link href="/tentang" asChild>
-        <TouchableOpacity style={styles.buttonSecondary}>
-          <Text style={styles.buttonText}>Tentang Aplikasi</Text>
-        </TouchableOpacity>
-      </Link>
+      <TouchableOpacity style={styles.button} onPress={() => router.push('/belajar-iqro')}>
+        <Image source={require('../../assets/anak-ngaji.png')} style={styles.icon} />
+        <Text style={styles.buttonText}>Belajar Iqro</Text>
+      </TouchableOpacity>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1, justifyContent: 'center', alignItems: 'center', padding: 20, backgroundColor: '#F0FFF0'
+    flex: 1,
+    backgroundColor: colors.background,
+    padding: 20,
+    alignItems: 'center',
   },
-  title: { fontSize: 28, fontWeight: 'bold', marginBottom: 10, color: '#00796B' },
-  subtitle: { fontSize: 16, marginBottom: 40, textAlign: 'center' },
+  title: {
+    fontSize: 32,
+    fontFamily: font.family,
+    color: colors.primary,
+    marginBottom: 20,
+  },
   button: {
-    backgroundColor: '#00796B', padding: 15, borderRadius: 10, marginBottom: 15, width: 200, alignItems: 'center'
+    flexDirection: 'row',
+    alignItems: 'center',
+    backgroundColor: colors.secondary,
+    padding: 15,
+    borderRadius: 15,
+    marginVertical: 10,
+    width: '80%',
+    elevation: 3,
   },
-  buttonSecondary: {
-    backgroundColor: '#B2DFDB', padding: 15, borderRadius: 10, marginBottom: 15, width: 200, alignItems: 'center'
+  buttonText: {
+    fontFamily: font.family,
+    fontSize: 18,
+    marginLeft: 10,
+    color: colors.text,
   },
-  buttonText: { color: 'white', fontSize: 16 }
+  icon: {
+    width: 40,
+    height: 40,
+  },
 });

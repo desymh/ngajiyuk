@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { View, Text, FlatList, ActivityIndicator, StyleSheet } from 'react-native';
+import { colors, font } from '../../constants/theme';
 
 export default function DoaHarian() {
   const [doa, setDoa] = useState([]);
@@ -21,8 +22,8 @@ export default function DoaHarian() {
   if (loading) {
     return (
       <View style={styles.container}>
-        <ActivityIndicator size="large" color="#f1c40f" />
-        <Text>Loading Doa Harian...</Text>
+        <ActivityIndicator size="large" color={colors.primary} />
+        <Text style={styles.loadingText}>Loading Doa Harian...</Text>
       </View>
     );
   }
@@ -47,38 +48,48 @@ export default function DoaHarian() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: colors.background,
     justifyContent: 'center',
     alignItems: 'center',
   },
+  loadingText: {
+    marginTop: 10,
+    fontFamily: font.family,
+    fontSize: 16,
+    color: colors.text,
+  },
   list: {
-    backgroundColor: '#fff8e1',
+    backgroundColor: colors.background,
   },
   card: {
-    backgroundColor: '#fff',
+    backgroundColor: colors.card,
     margin: 10,
     padding: 15,
     borderRadius: 10,
     elevation: 3,
   },
   title: {
-    fontWeight: 'bold',
+    fontFamily: font.family,
     fontSize: 18,
     marginBottom: 10,
-    color: '#2c3e50',
+    color: colors.primary,
   },
   arab: {
     fontSize: 24,
     textAlign: 'right',
     marginVertical: 10,
-    color: '#34495e',
+    color: colors.arabic,
+    fontFamily: font.family,
   },
   latin: {
     fontStyle: 'italic',
     marginBottom: 10,
-    color: '#7f8c8d',
+    color: colors.latin,
+    fontFamily: font.family,
   },
   arti: {
     fontSize: 16,
-    color: '#2c3e50',
+    color: colors.text,
+    fontFamily: font.family,
   },
 });

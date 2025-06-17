@@ -1,51 +1,109 @@
-import React from 'react';
-import { View, Text, TouchableOpacity, StyleSheet, ScrollView } from 'react-native';
-import { useRouter } from 'expo-router';
+import { Link } from 'expo-router';
+import { ScrollView, StyleSheet, Text, TouchableOpacity } from 'react-native';
 
-export default function PilihSholat() {
-  const router = useRouter();
-
-  const sholatList = ['Shubuh', 'Dzuhur', 'Ashar', 'Maghrib', 'Isya'];
-
+export default function BacaanSholat() {
   return (
     <ScrollView contentContainerStyle={styles.container}>
-      <Text style={styles.header}>Pilih Sholat</Text>
-      {sholatList.map((sholat, index) => (
-        <TouchableOpacity
-          key={index}
-          style={styles.button}
-          onPress={() => router.push(`/bacaan-sholat/${sholat.toLowerCase()}`)}
-        >
-          <Text style={styles.buttonText}>{sholat}</Text>
+      <Text style={styles.header}>Bacaan Sholat</Text>
+
+      <Link href="/bacaan-sholat/niat" asChild>
+        <TouchableOpacity style={styles.button}>
+          <Text style={styles.buttonText}>Niat</Text>
         </TouchableOpacity>
-      ))}
+      </Link>
+
+      <Link href="/bacaan-sholat/takbiratul-ihram" asChild>
+        <TouchableOpacity style={styles.button}>
+          <Text style={styles.buttonText}>Takbiratul Ihram</Text>
+        </TouchableOpacity>
+      </Link>
+
+      <Link href="/bacaan-sholat/iftitah" asChild>
+        <TouchableOpacity style={styles.button}>
+          <Text style={styles.buttonText}>Doa Iftitah</Text>
+        </TouchableOpacity>
+      </Link>
+
+      <Link href="/bacaan-sholat/fatihah" asChild>
+        <TouchableOpacity style={styles.button}>
+          <Text style={styles.buttonText}>Al-Fatihah</Text>
+        </TouchableOpacity>
+      </Link>
+
+      <Link href="/bacaan-sholat/surat" asChild>
+        <TouchableOpacity style={styles.button}>
+          <Text style={styles.buttonText}>Surat Pendek (Juz 30)</Text>
+        </TouchableOpacity>
+      </Link>
+
+      <Link href="/bacaan-sholat/rukuk" asChild>
+        <TouchableOpacity style={styles.button}>
+          <Text style={styles.buttonText}>Rukuk</Text>
+        </TouchableOpacity>
+      </Link>
+
+      <Link href="/bacaan-sholat/itidal" asChild>
+        <TouchableOpacity style={styles.button}>
+          <Text style={styles.buttonText}>I'tidal</Text>
+        </TouchableOpacity>
+      </Link>
+
+      <Link href="/bacaan-sholat/sujud" asChild>
+        <TouchableOpacity style={styles.button}>
+          <Text style={styles.buttonText}>Sujud</Text>
+        </TouchableOpacity>
+      </Link>
+
+      <Link href="/bacaan-sholat/duduk2sujud" asChild>
+        <TouchableOpacity style={styles.button}>
+          <Text style={styles.buttonText}>Duduk Antara Dua Sujud</Text>
+        </TouchableOpacity>
+      </Link>
+
+      <Link href="/bacaan-sholat/tahiyatawal" asChild>
+        <TouchableOpacity style={styles.button}>
+          <Text style={styles.buttonText}>Tahiyat Awal</Text>
+        </TouchableOpacity>
+      </Link>
+
+      <Link href="/bacaan-sholat/tahiyatakhir" asChild>
+        <TouchableOpacity style={styles.button}>
+          <Text style={styles.buttonText}>Tahiyat Akhir</Text>
+        </TouchableOpacity>
+      </Link>
+
+      <Link href="/bacaan-sholat/salam" asChild>
+        <TouchableOpacity style={styles.button}>
+          <Text style={styles.buttonText}>Salam</Text>
+        </TouchableOpacity>
+      </Link>
+
     </ScrollView>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
-    paddingVertical: 50,
-    alignItems: 'center',
+    padding: 20,
     backgroundColor: '#fffde7',
-    flexGrow: 1,
   },
   header: {
     fontSize: 24,
     fontWeight: 'bold',
-    marginBottom: 30,
-    color: '#e67e22',
+    marginBottom: 20,
+    textAlign: 'center',
+    color: '#d35400',
   },
   button: {
-    backgroundColor: '#e67e22',
+    backgroundColor: '#f39c12',
     padding: 15,
+    marginVertical: 8,
     borderRadius: 10,
-    width: '70%',
-    marginBottom: 20,
+    elevation: 3,
   },
   buttonText: {
-    color: '#fff',
     fontSize: 18,
+    color: '#fff',
     textAlign: 'center',
   },
 });

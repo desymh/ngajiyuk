@@ -4,6 +4,7 @@ import { ScrollView, Text, StyleSheet, View } from 'react-native';
 export default function NiatSunnah() {
   return (
     <ScrollView style={styles.container}>
+      
       <View style={styles.card}>
         <Text style={styles.title}>Niat Sholat Dhuha</Text>
         <Text style={styles.arab}>
@@ -17,7 +18,96 @@ export default function NiatSunnah() {
         </Text>
       </View>
 
-      {/* Nanti kita tambahkan Tahajjud, Witir, dll */}
+      <View style={styles.card}>
+        <Text style={styles.title}>Niat Sholat Tahajjud</Text>
+        <Text style={styles.arab}>
+          أُصَلِّي سُنَّةَ التَّهَجُّدِ رَكْعَتَيْنِ لِلَّهِ تَعَالَى
+        </Text>
+        <Text style={styles.latin}>
+          Usholli sunnatat-tahajjudi rak’ataini lillaahi ta’aalaa.
+        </Text>
+        <Text style={styles.arti}>
+          Aku niat sholat sunnah Tahajjud dua rakaat karena Allah Ta’ala.
+        </Text>
+      </View>
+
+      <View style={styles.card}>
+        <Text style={styles.title}>Niat Sholat Witir</Text>
+        <Text style={styles.arab}>
+          أُصَلِّي سُنَّةَ الْوِتْرِ رَكْعَةً لِلَّهِ تَعَالَى
+        </Text>
+        <Text style={styles.latin}>
+          Usholli sunnatal witri rak’atan lillaahi ta’aalaa.
+        </Text>
+        <Text style={styles.arti}>
+          Aku niat sholat sunnah Witir satu rakaat karena Allah Ta’ala.
+        </Text>
+      </View>
+
+      <View style={styles.card}>
+        <Text style={styles.title}>Niat Sholat Istikharah</Text>
+        <Text style={styles.arab}>
+          أُصَلِّي سُنَّةَ الاِسْتِخَارَةِ رَكْعَتَيْنِ لِلَّهِ تَعَالَى
+        </Text>
+        <Text style={styles.latin}>
+          Usholli sunnatal istikhaarah rak’ataini lillaahi ta’aalaa.
+        </Text>
+        <Text style={styles.arti}>
+          Aku niat sholat sunnah Istikharah dua rakaat karena Allah Ta’ala.
+        </Text>
+      </View>
+
+      <View style={styles.card}>
+        <Text style={styles.title}>Niat Sholat Taubat</Text>
+        <Text style={styles.arab}>
+          أُصَلِّي سُنَّةَ التَّوْبَةِ رَكْعَتَيْنِ لِلَّهِ تَعَالَى
+        </Text>
+        <Text style={styles.latin}>
+          Usholli sunnatat-tawbata rak’ataini lillaahi ta’aalaa.
+        </Text>
+        <Text style={styles.arti}>
+          Aku niat sholat sunnah Taubat dua rakaat karena Allah Ta’ala.
+        </Text>
+      </View>
+
+      <View style={styles.card}>
+        <Text style={styles.title}>Niat Sholat Tarawih</Text>
+        <Text style={styles.arab}>
+          أُصَلِّي سُنَّةَ التَّرَاوِيْحِ رَكْعَتَيْنِ لِلَّهِ تَعَالَى
+        </Text>
+        <Text style={styles.latin}>
+          Usholli sunnatat-taraawiihi rak’ataini lillaahi ta’aalaa.
+        </Text>
+        <Text style={styles.arti}>
+          Aku niat sholat sunnah Tarawih dua rakaat karena Allah Ta’ala.
+        </Text>
+      </View>
+
+      <View style={styles.card}>
+        <Text style={styles.title}>Niat Sholat Sunnah untuk Kedua Orangtua</Text>
+        <Text style={styles.arab}>
+          أُصَلِّي سُنَّةً لِوَالِدَيَّ رَكْعَتَيْنِ لِلَّهِ تَعَالَى
+        </Text>
+        <Text style={styles.latin}>
+          Usholli sunnatan liwaalidayya rak’ataini lillaahi ta’aalaa.
+        </Text>
+        <Text style={styles.arti}>
+          Aku niat sholat sunnah untuk kedua orangtuaku dua rakaat karena Allah Ta’ala.
+        </Text>
+      </View>
+      <View style={styles.card}>
+        <Text style={styles.title}>Niat Sholat Tahiyatul Masjid</Text>
+        <Text style={styles.arab}>
+          أُصَلِّي سُنَّةَ التَّحِيَّةِ لِلْمَسْجِدِ رَكْعَتَيْنِ لِلَّهِ تَعَالَى
+        </Text>
+        <Text style={styles.latin}>
+          Usholli sunnatal tahiyyati lilmasjidi rak’ataini lillaahi ta’aalaa.
+        </Text>
+        <Text style={styles.arti}>
+          Aku niat sholat sunnah Tahiyatul Masjid dua rakaat karena Allah Ta’ala.
+        </Text>
+      </View>
+
     </ScrollView>
   );
 }

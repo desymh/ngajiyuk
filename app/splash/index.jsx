@@ -1,5 +1,5 @@
-import React, { useEffect } from 'react';
-import { View, Image, Text, StyleSheet } from 'react-native';
+import { useEffect } from 'react';
+import { View, Image, StyleSheet } from 'react-native';
 import { useRouter } from 'expo-router';
 
 export default function SplashScreen() {
@@ -8,17 +8,18 @@ export default function SplashScreen() {
   useEffect(() => {
     const timer = setTimeout(() => {
       router.replace('/menu');
-    }, 3000);
+    }, 2000); // 2 detik
+
     return () => clearTimeout(timer);
   }, []);
 
   return (
     <View style={styles.container}>
-      <Image 
-        source={require('../../assets/anak-ngaji.png')} 
-        style={styles.logo}
+      <Image
+        source={require('../../assets/splash-anak.png')}
+        style={styles.image}
+        resizeMode="cover" // Biar full tanpa spasi
       />
-      <Text style={styles.title}>Ngaji Yuk!</Text>
     </View>
   );
 }
@@ -26,18 +27,9 @@ export default function SplashScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#E0F7FA',
-    justifyContent: 'center',
-    alignItems: 'center',
   },
-  logo: {
-    width: 200,
-    height: 200,
-  },
-  title: {
-    marginTop: 20,
-    fontSize: 32,
-    fontWeight: 'bold',
-    color: '#FF6F61',
+  image: {
+    width: '100%',
+    height: '100%',
   },
 });

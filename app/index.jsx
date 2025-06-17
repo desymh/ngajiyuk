@@ -1,18 +1,24 @@
 import { Link } from 'expo-router';
 import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 
-export default function Index() {
+export default function MenuUtama() {
   return (
     <View style={styles.container}>
       <Image source={require('../assets/logo-ngajiyuk.png')} style={styles.logo} />
-      <Text style={styles.title}>Ngaji Yuk!</Text>
-      <Text style={styles.subtitle}>Belajar doa, sholat, dan huruf hijaiyah dengan mudah dan menyenangkan!</Text>
 
-      <Link href="/menu" asChild>
+      <Text style={styles.title}>🌟 Ngaji Yuk! 🌟</Text>
+      <Text style={styles.subtitle}>
+        Belajar doa, sholat, dan huruf hijaiyah dengan cara yang menyenangkan!
+      </Text>
+
+      {/* Tombol ke fitur belajar */}
+      <Link href="/fitur" asChild>
         <TouchableOpacity style={styles.button}>
-          <Text style={styles.buttonText}>Mulai Belajar</Text>
+          <Text style={styles.buttonText}>🎉 Mulai Belajar 🎉</Text>
         </TouchableOpacity>
       </Link>
+
+      <Text style={styles.footer}>Versi Anak-anak 👧🧒</Text>
     </View>
   );
 }
@@ -20,36 +26,48 @@ export default function Index() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff8dc',
+    backgroundColor: '#ffe4f2',
     justifyContent: 'center',
     alignItems: 'center',
-    padding: 20,
+    padding: 30,
   },
   logo: {
-    width: 200,
-    height: 200,
-    marginBottom: 30,
+    width: 220,
+    height: 220,
+    marginBottom: 20,
   },
   title: {
-    fontSize: 32,
+    fontSize: 36,
     fontWeight: 'bold',
     color: '#ff69b4',
+    textAlign: 'center',
   },
   subtitle: {
     fontSize: 16,
-    color: '#555',
+    color: '#6c3483',
     textAlign: 'center',
     marginVertical: 20,
+    paddingHorizontal: 10,
   },
   button: {
-    backgroundColor: '#ffb347',
-    paddingVertical: 15,
-    paddingHorizontal: 30,
+    backgroundColor: '#f9a825',
+    paddingVertical: 16,
+    paddingHorizontal: 40,
     borderRadius: 30,
+    shadowColor: '#000',
+    shadowOpacity: 0.2,
+    shadowOffset: { width: 2, height: 4 },
+    shadowRadius: 5,
+    elevation: 5,
   },
   buttonText: {
-    color: 'white',
+    color: '#fff',
     fontWeight: 'bold',
-    fontSize: 18,
+    fontSize: 20,
+  },
+  footer: {
+    marginTop: 40,
+    fontSize: 14,
+    color: '#888',
   },
 });

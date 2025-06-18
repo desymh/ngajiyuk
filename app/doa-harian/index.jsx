@@ -1,111 +1,129 @@
+import { useRouter } from 'expo-router';
 import React, { useEffect, useState } from 'react';
-import { ActivityIndicator, FlatList, Image, StyleSheet, Text, View } from 'react-native';
-import { colors, font } from '../../constants/theme';
+import { ActivityIndicator, FlatList, Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 
-const cardColors = ['#FFD180', '#CE93D8', '#80CBC4', '#A5D6A7', '#FFAB91'];
+// Mapping gambar berdasarkan judul
+const imageMap = {
+  'Doa Sebelum Tidur': require('../../assets/sebelum_tidur.png'),
+  'Doa Bangun Tidur': require('../../assets/bangun_tidur.png'),
+  'Doa Masuk Kamar Mandi': require('../../assets/masuk_toilet.png'),
+  'Doa Keluar Kamar Mandi': require('../../assets/keluar_toilet.png'),
+  'Doa Sebelum Belajar': require('../../assets/sebelum_belajar.png'),
+  'Doa Sesudah Belajar': require('../../assets/sesudah_belajar.png'),
+  'Doa Ketika Bercermin': require('../../assets/bercermin.png'),
+  'Doa Masuk Rumah': require('../../assets/masuk_rumah.png'),
+  'Doa Keluar Rumah': require('../../assets/keluar_rumah.png'),
+  'Doa Setelah Membaca Al-Quran': require('../../assets/sesudah_ngaji.png'),
+  'Doa Sebelum Membaca Al-Quran': require('../../assets/sebelum_ngaji.png'),
+  'Doa Memohon Ilmu Yang Bermanfaat': require('../../assets/ilmu.png'),
+  'Doa Sebelum Wudhu': require('../../assets/sebelum-w.png'),
+  'Doa Setelah Wudhu': require('../../assets/sesudah-w.png'),
+  'Doa Hendak Bepergian': require('../../assets/bepergian.png'),
+  'Doa Menyambut Pagi hari': require('../../assets/pagi.png'),
+  'Doa Menyambut Sore Hari': require('../../assets/sore.png'),
+  'Doa Sebelum Wudhu': require('../../assets/sebelum-w.png'),
+  'Doa Memohon Rezeki': require('../../assets/rezeki.png'),
+  'Doa Selamat dari Kedengkian': require('../../assets/dengki.png'),
+  'Doa Sebelum Mandi': require('../../assets/sebelum_mandi.png'),
+  'Doa Ketika Sampai di Tempat Tujuan': require('../../assets/tujuan.png'),
+  'Doa Menjelang Sholat Shubuh': require('../../assets/menjelang-subuh.png'),
+'Doa Memohon Terlepas dari Kesulitan': require('../../assets/kesulitan.png'),
+  default: require('../../assets/anak-berdoa.png'),
+};
+
 
 export default function DoaHarian() {
-  const [doa, setDoa] = useState([]);
+  const [doaList, setDoaList] = useState([]);
   const [loading, setLoading] = useState(true);
+  const router = useRouter();
 
   useEffect(() => {
     fetch('https://open-api.my.id/api/doa')
-      .then(response => response.json())
-      .then(data => {
-        setDoa(data);
+      .then((res) => res.json())
+      .then((data) => {
+        setDoaList(data);
         setLoading(false);
       })
-      .catch(error => {
-        console.error('Error fetching data: ', error);
+      .catch((err) => {
+        console.error('Gagal fetch doa:', err);
         setLoading(false);
       });
   }, []);
 
   if (loading) {
     return (
-      <View style={styles.container}>
-        <ActivityIndicator size="large" color={colors.primary} />
-        <Text style={styles.loadingText}>Loading Doa Harian...</Text>
+      <View style={styles.loadingContainer}>
+        <ActivityIndicator size="large" color="#ff9800" />
+        <Text style={styles.loadingText}>Memuat Doa Harian...</Text>
       </View>
     );
   }
 
   return (
     <FlatList
-      style={styles.list}
-      data={doa}
+      data={doaList}
       keyExtractor={(item, index) => index.toString()}
-      renderItem={({ item, index }) => (
-        <View style={[styles.card, { backgroundColor: cardColors[index % cardColors.length] }]}>
-          <View style={styles.row}>
-            <Image source={require('../../assets/anak-berdoa.png')} style={styles.icon} />
+      contentContainerStyle={styles.list}
+      renderItem={({ item }) => {
+        const image = imageMap[item.judul] || imageMap['default'];
+
+        return (
+          <TouchableOpacity
+            style={styles.card}
+            onPress={() => router.push(`/doa-harian/${encodeURIComponent(item.judul)}`)}
+          >
+            <Image source={image} style={styles.icon} />
             <View style={styles.textContainer}>
               <Text style={styles.title}>{item.judul}</Text>
-              <Text style={styles.arab}>{item.arab}</Text>
-              <Text style={styles.latin}>{item.latin}</Text>
-              <Text style={styles.arti}>{item.arti}</Text>
+              <Text style={styles.preview} numberOfLines={1}>{item.arab}</Text>
             </View>
-          </View>
-        </View>
-      )}
+          </TouchableOpacity>
+        );
+      }}
     />
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
+  loadingContainer: {
     flex: 1,
-    backgroundColor: colors.background,
     justifyContent: 'center',
     alignItems: 'center',
   },
   loadingText: {
     marginTop: 10,
-    fontFamily: font.family,
     fontSize: 16,
-    color: colors.text,
+    color: '#555',
   },
   list: {
-    backgroundColor: colors.background,
+    padding: 16,
   },
   card: {
-    margin: 10,
-    padding: 15,
-    borderRadius: 20,
-    elevation: 3,
-  },
-  row: {
     flexDirection: 'row',
-    alignItems: 'flex-start',
+    backgroundColor: '#fff8dc',
+    marginBottom: 12,
+    padding: 12,
+    borderRadius: 12,
+    elevation: 2,
+    alignItems: 'center',
   },
   icon: {
     width: 60,
     height: 60,
-    marginRight: 15,
     resizeMode: 'contain',
+    marginRight: 15,
   },
   textContainer: {
     flex: 1,
   },
   title: {
-    fontFamily: font.family,
     fontSize: 18,
-    color: colors.primary,
-    marginBottom: 5,
+    fontWeight: 'bold',
+    color: '#d35400',
   },
-  arab: {
-    fontSize: 20,
-    color: colors.arabic,
-    textAlign: 'right',
-    marginBottom: 5,
-  },
-  latin: {
-    fontStyle: 'italic',
-    color: colors.latin,
-    marginBottom: 5,
-  },
-  arti: {
+  preview: {
     fontSize: 14,
-    color: colors.text,
+    color: '#555',
+    marginTop: 4,
   },
 });

@@ -1,6 +1,6 @@
 import { useRouter } from 'expo-router';
 import React from 'react';
-import { Image, StyleSheet, Text, TouchableOpacity, View, Dimensions } from 'react-native';
+import { Dimensions, Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { colors, font } from '../../constants/theme';
 
 const menuItems = [
@@ -20,10 +20,11 @@ const menuItems = [
     route: '/belajar-iqro',
   },
   {
-    title: 'Game Hijaiyah',
-    image: require('../../assets/game.png'),
-    route: '/game',
-  },
+  title: 'Tata Cara Wudhu',
+  image: require('../../assets/niat.png'), 
+  route:'/wudhu',
+},
+
 ];
 
 export default function Menu() {

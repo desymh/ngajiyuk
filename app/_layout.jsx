@@ -2,6 +2,7 @@ import { Stack } from 'expo-router';
 
 export default function Layout() {
   return (
-    <Stack initialRouteName="splash/index" screenOptions={{ headerShown: false }} />
+    <Stack screenOptions={{ headerShown: false }} />
+
   );
 }

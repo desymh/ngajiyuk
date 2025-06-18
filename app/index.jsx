@@ -8,8 +8,7 @@ export default function Splash() {
   useEffect(() => {
     const timeout = setTimeout(() => {
       router.replace('/menu');
-    }, 2000); // setelah 2 detik masuk ke menu
-
+    }, 2000); 
     return () => clearTimeout(timeout);
   }, []);
 

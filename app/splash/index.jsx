@@ -8,7 +8,7 @@ export default function SplashScreen() {
   useEffect(() => {
     const timer = setTimeout(() => {
       router.replace('/menu');
-    }, 2000); // 2 detik
+    }, 2000); 
 
     return () => clearTimeout(timer);
   }, []);
@@ -18,7 +18,7 @@ export default function SplashScreen() {
       <Image
         source={require('../../assets/splash-anak.png')}
         style={styles.image}
-        resizeMode="cover" // Biar full tanpa spasi
+        resizeMode="cover" 
       />
     </View>
   );

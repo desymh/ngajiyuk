@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, FlatList, ActivityIndicator, StyleSheet } from 'react-native';
+import { ActivityIndicator, FlatList, Image, StyleSheet, Text, View } from 'react-native';
 import { colors, font } from '../../constants/theme';
+
+const cardColors = ['#FFD180', '#CE93D8', '#80CBC4', '#A5D6A7', '#FFAB91'];
 
 export default function DoaHarian() {
   const [doa, setDoa] = useState([]);
@@ -33,12 +35,17 @@ export default function DoaHarian() {
       style={styles.list}
       data={doa}
       keyExtractor={(item, index) => index.toString()}
-      renderItem={({ item }) => (
-        <View style={styles.card}>
-          <Text style={styles.title}>{item.judul}</Text>
-          <Text style={styles.arab}>{item.arab}</Text>
-          <Text style={styles.latin}>{item.latin}</Text>
-          <Text style={styles.arti}>{item.arti}</Text>
+      renderItem={({ item, index }) => (
+        <View style={[styles.card, { backgroundColor: cardColors[index % cardColors.length] }]}>
+          <View style={styles.row}>
+            <Image source={require('../../assets/anak-berdoa.png')} style={styles.icon} />
+            <View style={styles.textContainer}>
+              <Text style={styles.title}>{item.judul}</Text>
+              <Text style={styles.arab}>{item.arab}</Text>
+              <Text style={styles.latin}>{item.latin}</Text>
+              <Text style={styles.arti}>{item.arti}</Text>
+            </View>
+          </View>
         </View>
       )}
     />
@@ -62,34 +69,43 @@ const styles = StyleSheet.create({
     backgroundColor: colors.background,
   },
   card: {
-    backgroundColor: colors.card,
     margin: 10,
     padding: 15,
-    borderRadius: 10,
+    borderRadius: 20,
     elevation: 3,
+  },
+  row: {
+    flexDirection: 'row',
+    alignItems: 'flex-start',
+  },
+  icon: {
+    width: 60,
+    height: 60,
+    marginRight: 15,
+    resizeMode: 'contain',
+  },
+  textContainer: {
+    flex: 1,
   },
   title: {
     fontFamily: font.family,
     fontSize: 18,
-    marginBottom: 10,
     color: colors.primary,
+    marginBottom: 5,
   },
   arab: {
-    fontSize: 24,
-    textAlign: 'right',
-    marginVertical: 10,
+    fontSize: 20,
     color: colors.arabic,
-    fontFamily: font.family,
+    textAlign: 'right',
+    marginBottom: 5,
   },
   latin: {
     fontStyle: 'italic',
-    marginBottom: 10,
     color: colors.latin,
-    fontFamily: font.family,
+    marginBottom: 5,
   },
   arti: {
-    fontSize: 16,
+    fontSize: 14,
     color: colors.text,
-    fontFamily: font.family,
   },
 });

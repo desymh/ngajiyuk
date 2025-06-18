@@ -1,64 +1,95 @@
-import React from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, Image } from 'react-native';
 import { useRouter } from 'expo-router';
+import React from 'react';
+import { Image, StyleSheet, Text, TouchableOpacity, View, Dimensions } from 'react-native';
 import { colors, font } from '../../constants/theme';
+
+const menuItems = [
+  {
+    title: 'Doa Harian',
+    image: require('../../assets/anak-berdoa.png'),
+    route: '/doa-harian',
+  },
+  {
+    title: 'Bacaan Sholat',
+    image: require('../../assets/anak-sholat.png'),
+    route: '/bacaan-sholat',
+  },
+  {
+    title: 'Belajar Iqro',
+    image: require('../../assets/anak-ngaji.png'),
+    route: '/belajar-iqro',
+  },
+  {
+    title: 'Game Hijaiyah',
+    image: require('../../assets/game.png'),
+    route: '/game',
+  },
+];
 
 export default function Menu() {
   const router = useRouter();
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Ngaji Yuk!</Text>
-
-      <TouchableOpacity style={styles.button} onPress={() => router.push('/doa-harian')}>
-        <Image source={require('../../assets/anak-berdoa.png')} style={styles.icon} />
-        <Text style={styles.buttonText}>Doa Harian</Text>
-      </TouchableOpacity>
-
-      <TouchableOpacity style={styles.button} onPress={() => router.push('/bacaan-sholat')}>
-        <Image source={require('../../assets/anak-sholat.png')} style={styles.icon} />
-        <Text style={styles.buttonText}>Bacaan Sholat</Text>
-      </TouchableOpacity>
-
-      <TouchableOpacity style={styles.button} onPress={() => router.push('/belajar-iqro')}>
-        <Image source={require('../../assets/anak-ngaji.png')} style={styles.icon} />
-        <Text style={styles.buttonText}>Belajar Iqro</Text>
-      </TouchableOpacity>
+      <Text style={styles.header}>Ngaji Yuk!</Text>
+      <View style={styles.grid}>
+        {menuItems.map((item, index) => (
+          <TouchableOpacity
+            key={index}
+            style={styles.card}
+            onPress={() => router.push(item.route)}
+          >
+            <Image source={item.image} style={styles.image} />
+            <Text style={styles.label}>{item.title}</Text>
+          </TouchableOpacity>
+        ))}
+      </View>
     </View>
   );
 }
+
+const screenWidth = Dimensions.get('window').width;
+const cardSize = (screenWidth - 80) / 2;
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: colors.background,
-    padding: 20,
+    paddingTop: 50,
     alignItems: 'center',
   },
-  title: {
+  header: {
     fontSize: 32,
     fontFamily: font.family,
     color: colors.primary,
-    marginBottom: 20,
+    marginBottom: 30,
   },
-  button: {
+  grid: {
     flexDirection: 'row',
-    alignItems: 'center',
+    flexWrap: 'wrap',
+    justifyContent: 'center',
+    gap: 20,
+  },
+  card: {
     backgroundColor: colors.secondary,
-    padding: 15,
-    borderRadius: 15,
-    marginVertical: 10,
-    width: '80%',
-    elevation: 3,
+    width: cardSize,
+    height: cardSize + 20,
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderRadius: 20,
+    margin: 10,
+    elevation: 5,
   },
-  buttonText: {
+  image: {
+    width: 80,
+    height: 80,
+    marginBottom: 10,
+    resizeMode: 'contain',
+  },
+  label: {
     fontFamily: font.family,
-    fontSize: 18,
-    marginLeft: 10,
+    fontSize: 16,
     color: colors.text,
-  },
-  icon: {
-    width: 40,
-    height: 40,
+    textAlign: 'center',
   },
 });

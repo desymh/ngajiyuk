@@ -1,90 +1,69 @@
 import React from 'react';
-import { View, Text, StyleSheet, Image, TouchableOpacity } from 'react-native';
+import { View, StyleSheet, Image, TouchableOpacity, Dimensions } from 'react-native';
 import { useLocalSearchParams, useRouter } from 'expo-router';
+import { Ionicons } from '@expo/vector-icons';
 
-const detailData = {
-  niat: {
-    title: 'Niat',
-    image: require('../../assets/niat.png'),
-    description: 'Niat berwudhu di dalam hati sebelum memulai.',
-  },
-  muka: {
-    title: 'Membasuh Muka',
-    image: require('../../assets/game.png'),
-    description: 'Membasuh seluruh muka dari ujung rambut hingga dagu.',
-  },
-  tangan: {
-    title: 'Membasuh Tangan',
-    image: require('../../assets/niat.png'),
-    description: 'Membasuh kedua tangan sampai siku.',
-  },
-  kepala: {
-    title: 'Membasuh Kepala',
-    image: require('../../assets/niat.png'),
-    description: 'Mengusap sebagian kepala dengan air.',
-  },
-  telinga: {
-    title: 'Membasuh Telinga',
-    image: require('../../assets/niat.png'),
-    description: 'Membasuh telinga luar dan dalam (sunnah).',
-  },
-  kaki: {
-    title: 'Membasuh Kaki',
-    image: require('../../assets/niat.png'),
-    description: 'Membasuh kaki hingga mata kaki.',
-  },
+const stepImages = {
+  niat: require('../../assets/1.png'),
+  muka: require('../../assets/2.png'),
+  tangan: require('../../assets/3.png'),
+  kepala: require('../../assets/4.png'),
+  telinga: require('../../assets/5.png'),
+  kaki: require('../../assets/6.png'),
+  doa: require('../../assets/7.png'),
 };
 
 export default function StepDetail() {
   const { step } = useLocalSearchParams();
   const router = useRouter();
 
-  const data = detailData[step];
-
-  if (!data) return <Text>Data tidak ditemukan</Text>;
+  const imageSource = stepImages[step];
+  if (!imageSource) return null;
 
   return (
     <View style={styles.container}>
-      <TouchableOpacity onPress={() => router.back()} style={styles.back}>
-        <Text style={styles.backText}>← Kembali</Text>
-      </TouchableOpacity>
+      <View style={styles.backgroundCard}>
+        <Image source={imageSource} style={styles.image} />
+      </View>
 
-      <Image source={data.image} style={styles.image} />
-      <Text style={styles.title}>{data.title}</Text>
-      <Text style={styles.desc}>{data.description}</Text>
+      <TouchableOpacity onPress={() => router.back()} style={styles.backButton}>
+        <Ionicons name="arrow-back" size={28} color="#333" />
+      </TouchableOpacity>
     </View>
   );
 }
 
+const { width, height } = Dimensions.get('window');
+
 const styles = StyleSheet.create({
   container: {
-    padding: 25,
-    backgroundColor: '#fff',
     flex: 1,
+    backgroundColor: '#FCE38A', 
     alignItems: 'center',
+    justifyContent: 'center',
   },
-  back: {
-    alignSelf: 'flex-start',
-    marginBottom: 20,
-  },
-  backText: {
-    fontSize: 16,
-    color: '#555',
+  backgroundCard: {
+    width: width * 0.92,
+    height: height * 0.85,
+    borderRadius: 35,
+    backgroundColor: '#FFF',
+    justifyContent: 'center',
+    alignItems: 'center',
+    padding: 5,
   },
   image: {
-    width: 120,
-    height: 120,
-    marginBottom: 20,
-    resizeMode: 'contain',
+    width: '100%',
+    height: '100%',
+    borderRadius: 30,
+    resizeMode: 'cover',
   },
-  title: {
-    fontSize: 24,
-    fontWeight: 'bold',
-    marginBottom: 12,
-  },
-  desc: {
-    fontSize: 16,
-    textAlign: 'center',
-    color: '#444',
+  backButton: {
+    position: 'absolute',
+    top: 40,
+    left: 20,
+    padding: 8,
+    backgroundColor: '#ffffffcc',
+    borderRadius: 50,
+    zIndex: 10,
   },
 });

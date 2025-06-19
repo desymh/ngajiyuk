@@ -1,19 +1,18 @@
-import React, { useEffect, useRef } from 'react';
-import { Animated, View, Image, StyleSheet } from 'react-native';
 import { useRouter } from 'expo-router';
+import React, { useEffect, useRef } from 'react';
+import { Animated, Image, StyleSheet, View } from 'react-native';
 
 export default function SplashScreen() {
   const router = useRouter();
   const progress = useRef(new Animated.Value(0)).current;
 
   useEffect(() => {
-    // Animasi progress bar selama 2 detik
     Animated.timing(progress, {
       toValue: 1,
       duration: 2000,
       useNativeDriver: false,
     }).start(() => {
-      router.replace('/menu'); // Setelah selesai, pindah ke menu
+      router.replace('/menu');
     });
   }, []);
 

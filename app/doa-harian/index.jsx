@@ -102,7 +102,7 @@ const styles = StyleSheet.create({
   },
   listContainer: {
     padding: 16,
-    backgroundColor: '#FFF176',
+    backgroundColor: '#F9A528',
   },
   cardWrapper: {
   width: '90%', 

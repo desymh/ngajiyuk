@@ -1,65 +1,85 @@
 import React from 'react';
-import { View, Text, TouchableOpacity, StyleSheet, Image, ScrollView } from 'react-native';
+import {
+  FlatList,
+  Image,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 import { useRouter } from 'expo-router';
 
 const steps = [
-  { title: 'Niat', key: 'niat', image: require('../../assets/niat.png') },
-  { title: 'Membasuh Muka', key: 'muka', image: require('../../assets/game.png') },
-  { title: 'Membasuh Tangan', key: 'tangan', image: require('../../assets/niat.png') },
-  { title: 'Membasuh Kepala', key: 'kepala', image: require('../../assets/niat.png') },
-  { title: 'Membasuh Telinga', key: 'telinga', image: require('../../assets/niat.png') },
-  { title: 'Membasuh Kaki', key: 'kaki', image: require('../../assets/niat.png') },
+  { title: 'Niat', key: 'niat', image: require('../../assets/1.png'), color: '#FDEBD0' },
+  { title: 'Membasuh Muka', key: 'muka', image: require('../../assets/2.png'), color: '#D6EAF8' },
+  { title: 'Membasuh Tangan', key: 'tangan', image: require('../../assets/3.png'), color: '#D5F5E3' },
+  { title: 'Membasuh Kepala', key: 'kepala', image: require('../../assets/4.png'), color: '#FADBD8' },
+  { title: 'Membasuh Telinga', key: 'telinga', image: require('../../assets/5.png'), color: '#FCF3CF' },
+  { title: 'Membasuh Kaki', key: 'kaki', image: require('../../assets/6.png'), color: '#E8DAEF' },
+  { title: 'Doa Setelah Wudhu', key: 'doa', image: require('../../assets/7.png'), color: '#D1F2EB' },
 ];
 
 export default function WudhuList() {
   const router = useRouter();
 
   return (
-    <ScrollView contentContainerStyle={styles.container}>
-      <Text style={styles.header}>Tata Cara Wudhu</Text>
-      {steps.map((step, index) => (
+    <FlatList
+      data={steps}
+      keyExtractor={(item, index) => index.toString()}
+      contentContainerStyle={styles.listContainer}
+      renderItem={({ item }) => (
         <TouchableOpacity
-          key={index}
-          style={styles.card}
-          onPress={() => router.push({ pathname: '/wudhu/detail', params: { step: step.key } })}
+          style={[styles.card, { backgroundColor: item.color }]}
+          onPress={() =>
+            router.push({ pathname: '/wudhu/detail', params: { step: item.key } })
+          }
         >
-          <Image source={step.image} style={styles.image} />
-          <View>
-            <Text style={styles.title}>{step.title}</Text>
-          </View>
+          <Image source={item.image} style={styles.cardBackground} />
+          <Text style={styles.title}>{item.title}</Text>
         </TouchableOpacity>
-      ))}
-    </ScrollView>
+      )}
+    />
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
-    padding: 20,
-    backgroundColor: '#fff',
-  },
-  header: {
-    fontSize: 26,
-    fontWeight: 'bold',
-    marginBottom: 20,
-    textAlign: 'center',
+  listContainer: {
+    padding: 16,
+    backgroundColor: '#FFFDE7',
   },
   card: {
-    backgroundColor: '#E2F0CB',
-    flexDirection: 'row',
+    width: '92%',
+    height: 180,
+    alignSelf: 'center',
+    borderRadius: 30,
+    padding: 20,
+    marginBottom: 20,
+    overflow: 'hidden',
+    justifyContent: 'center',
     alignItems: 'center',
-    padding: 15,
-    borderRadius: 16,
-    marginBottom: 12,
+    elevation: 6,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 3 },
+    shadowOpacity: 0.1,
+    shadowRadius: 6,
   },
-  image: {
-    width: 60,
-    height: 60,
-    marginRight: 15,
-    resizeMode: 'contain',
-  },
+  cardBackground: {
+    ...StyleSheet.absoluteFillObject,
+  position: 'absolute',
+  top: 0,
+  left: 0,
+  width: '200%',
+  height: '200%',
+  resizeMode: 'cover',
+  opacity: 0.15,
+  transform: [{ translateX: -50 }, { translateY: -30 }],
+  borderRadius: 30,
+},
+
   title: {
-    fontSize: 18,
+    fontSize: 22,
     fontWeight: 'bold',
+    color: '#2c3e50',
+    textAlign: 'center',
   },
 });

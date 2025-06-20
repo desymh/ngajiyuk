@@ -15,27 +15,27 @@ import { colors, font } from '../../constants/theme';
 const menuItems = [
   {
     title: 'Doa Harian',
-    image: require('../../assets/anak-berdoa.png'),
+    image: require('../../assets/icon-d.png'),
     route: '/doa-harian',
     color: '#FDEBD0',
   },
   {
     title: 'Bacaan Sholat',
-    image: require('../../assets/anak-sholat.png'),
+    image: require('../../assets/icon-s.png'),
     route: '/bacaan-sholat',
-     color: '#D6EAF8',
+    color: '#D6EAF8',
   },
   {
-    title: 'asmaul husna',
-    image: require('../../assets/anak-ngaji.png'),
+    title: 'Asmaul Husna',
+    image: require('../../assets/icon-a.png'),
     route: '/asmaul-husna',
     color: '#D5F5E3',
   },
   {
-    title: 'Naiat niat dalam Wudhu',
-    image: require('../../assets/niat.png'),
+    title: 'Niat Wudhu',
+    image: require('../../assets/icon-w.png'),
     route: '/wudhu',
-     color: '#FADBD8',
+    color: '#FADBD8',
   },
 ];
 
@@ -45,7 +45,6 @@ export default function Menu() {
   return (
     <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
       <Text style={styles.header}>Islamic Kids</Text>
-
 
       <TouchableOpacity style={styles.heroCard}>
         <View style={styles.heroContent}>
@@ -60,31 +59,34 @@ export default function Menu() {
         </View>
       </TouchableOpacity>
 
-     <FlatList
-  data={menuItems}
-  horizontal
-  showsHorizontalScrollIndicator={false}
-  keyExtractor={(item) => item.title}
-  contentContainerStyle={styles.menuScroll}
-  renderItem={({ item }) => (
-    <TouchableOpacity
-      style={[styles.menuCard, { backgroundColor: item.color }]} 
-      onPress={() => router.push(item.route)}
-    >
-      <Image source={item.image} style={styles.menuImage} />
-      <Text style={styles.menuLabel}>{item.title}</Text>
-    </TouchableOpacity>
-  )}
-/>
+      <FlatList
+        data={menuItems}
+        horizontal
+        showsHorizontalScrollIndicator={false}
+        keyExtractor={(item) => item.title}
+        contentContainerStyle={styles.menuScroll}
+        renderItem={({ item }) => (
+          <TouchableOpacity
+            style={[styles.menuCard]}
+            onPress={() => router.push(item.route)}
+          >
+            <View style={[styles.cardImageWrapper, { backgroundColor: item.color }]}>
+              <Image source={item.image} style={styles.cardImage} />
+            </View>
+            <Text style={styles.menuLabel}>{item.title}</Text>
+          </TouchableOpacity>
+        )}
+      />
+
       <View style={styles.recommendSection}>
         <Text style={styles.recommendTitle}>Rekomendasi</Text>
         <View style={styles.recommendCard}>
-          
         </View>
       </View>
     </ScrollView>
   );
 }
+
 const screenWidth = Dimensions.get('window').width;
 
 const styles = StyleSheet.create({
@@ -96,23 +98,24 @@ const styles = StyleSheet.create({
   },
   header: {
     fontSize: 28,
-    fontFamily: font.family,
+    fontFamily: 'Fredoka_400Regular',
+    fontWeight: 'bold',
     color: colors.primary,
     marginBottom: 20,
   },
   heroCard: {
-  backgroundColor: '#FDCB6E',
-  borderRadius: 20,
-  padding: 20,
-  marginHorizontal: 8,
-  marginBottom: 30,
-  shadowColor: '#000',
-  shadowOffset: { width: 0, height: 4 },
-  shadowOpacity: 0.1,
-  shadowRadius: 6,
-  elevation: 5,
-  minHeight: 220,
-},
+    backgroundColor: '#FDCB6E',
+    borderRadius: 20,
+    padding: 20,
+    marginHorizontal: 8,
+    marginBottom: 30,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.1,
+    shadowRadius: 6,
+    elevation: 5,
+    minHeight: 220,
+  },
   heroContent: {
     flexDirection: 'row',
     alignItems: 'center',
@@ -139,24 +142,35 @@ const styles = StyleSheet.create({
   menuCard: {
     backgroundColor: '#FFF',
     width: 120,
-    height: 130,
-    alignItems: 'center',
-    justifyContent: 'center',
+    height: 150,
     borderRadius: 16,
     marginRight: 16,
     elevation: 3,
+    overflow: 'hidden',
+    alignItems: 'center',
+    justifyContent: 'flex-start',
   },
-  menuImage: {
-    width: 60,
-    height: 60,
-    resizeMode: 'contain',
-    marginBottom: 8,
+  cardImageWrapper: {
+    width: '100%',
+    height: 110,
+    overflow: 'hidden',
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderTopLeftRadius: 16,
+    borderTopRightRadius: 16,
+  },
+  cardImage: {
+    width: '100%',
+    height: '100%',
+    resizeMode: 'cover',
+    transform: [{ scale: 1.8 }],
   },
   menuLabel: {
     fontFamily: font.family,
-    fontSize: 14,
+    fontSize: 13,
     color: colors.text,
     textAlign: 'center',
+    marginTop: 6,
   },
   recommendSection: {
     marginTop: 30,

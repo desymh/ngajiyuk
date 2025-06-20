@@ -10,6 +10,7 @@ import {
   Dimensions,
 } from 'react-native';
 import { useRouter } from 'expo-router';
+import Ionicons from 'react-native-vector-icons/Ionicons';
 
 const imageMap = {
   'Doa Sebelum Tidur': require('../../assets/sebelum_tidur.png'),
@@ -69,9 +70,20 @@ export default function DoaHarian() {
 
   return (
     <FlatList
+      ListHeaderComponent={
+        <View style={styles.headerContainer}>
+          <Image
+            source={require('../../assets/icon-doa.png')}
+            style={styles.headerImage}
+          />
+          <TouchableOpacity style={styles.backButton} onPress={() => router.back()}>
+            <Ionicons name="arrow-back" size={28} color="#fff" />
+          </TouchableOpacity>
+        </View>
+      }
       data={doaList}
       keyExtractor={(item, index) => index.toString()}
-      numColumns={2}
+      numColumns={3}
       contentContainerStyle={styles.listContainer}
       columnWrapperStyle={styles.row}
       renderItem={({ item }) => (
@@ -92,7 +104,7 @@ export default function DoaHarian() {
   );
 }
 
-const cardWidth = (Dimensions.get('window').width - 48) / 2;
+const cardWidth = (Dimensions.get('window').width - 64) / 3;
 
 const styles = StyleSheet.create({
   loadingContainer: {
@@ -105,19 +117,36 @@ const styles = StyleSheet.create({
     fontSize: 16,
     color: '#888',
   },
+  headerContainer: {
+    position: 'relative',
+  },
+  headerImage: {
+    width: '100%',
+    height: 210,
+    resizeMode: 'cover',
+    borderBottomLeftRadius: 30,
+    borderBottomRightRadius: 30,
+  },
+  backButton: {
+    position: 'absolute',
+    top: 40,
+    left: 20,
+    backgroundColor: 'rgba(0,0,0,0.3)',
+    padding: 6,
+    borderRadius: 20,
+  },
   listContainer: {
-    paddingHorizontal: 16,
-    paddingVertical: 20,
+    paddingBottom: 20,
     backgroundColor: '#FFFFFF',
   },
   row: {
     justifyContent: 'space-between',
-    marginBottom: 16,
+    marginBottom: 12,
   },
   cardWrapper: {
     width: cardWidth,
     aspectRatio: 1,
-    borderRadius: 20,
+    borderRadius: 16,
     overflow: 'hidden',
     justifyContent: 'center',
     alignItems: 'center',
@@ -134,16 +163,16 @@ const styles = StyleSheet.create({
   },
   overlay: {
     ...StyleSheet.absoluteFillObject,
-    backgroundColor: 'rgba(255,255,255,0.6)',
+    backgroundColor: 'rgba(255,255,255,0.3)',
   },
   textContainer: {
     zIndex: 2,
-    paddingHorizontal: 8,
+    paddingHorizontal: 6,
   },
   title: {
-    fontSize: 14,
-    fontWeight: 'bold',
-    color: '#5D4037',
+    fontSize: 13,
+    fontWeight: '900',
+    color: '#3E2723',
     textAlign: 'center',
   },
 });

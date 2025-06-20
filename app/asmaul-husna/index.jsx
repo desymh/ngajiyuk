@@ -7,11 +7,14 @@ import {
   Text,
   TouchableOpacity,
   View,
+  Dimensions,
 } from 'react-native';
 import { useRouter } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
 
 const colorsArray = ['#FDEBD0', '#D6EAF8', '#D5F5E3', '#FADBD8', '#E8DAEF', '#FCF3CF'];
+const screenWidth = Dimensions.get('window').width;
+const cardWidth = (screenWidth - 48) / 3;
 
 export default function AsmaulHusna() {
   const [data, setData] = useState([]);
@@ -41,42 +44,43 @@ export default function AsmaulHusna() {
   }
 
   return (
-    <View style={{ flex: 1, backgroundColor: '#fff' }}>
-      <View style={styles.headerContainer}>
-        <Image
-          source={require('../../assets/icon-asma.png')}
-          style={styles.fullHeaderImage}
-          resizeMode="cover"
-        />
-        <TouchableOpacity onPress={() => router.back()} style={styles.backIcon}>
-          <Ionicons name="arrow-back-outline" size={35} color="#fff" />
-        </TouchableOpacity>
-      </View>
-
-      <FlatList
-        data={data}
-        numColumns={3}
-        contentContainerStyle={styles.gridContainer}
-        keyExtractor={(item, index) => index.toString()}
-        renderItem={({ item, index }) => (
-          <TouchableOpacity
-            style={[styles.card, { backgroundColor: colorsArray[index % colorsArray.length] }]}
-          >
-            <Text style={styles.arab}>{item.arab}</Text>
-            <Text style={styles.latin}>{item.latin}</Text>
-            <Text style={styles.arti}>{item.arti}</Text>
+    <FlatList
+      data={data}
+      numColumns={3}
+      keyExtractor={(item, index) => index.toString()}
+      contentContainerStyle={styles.gridContainer}
+      columnWrapperStyle={{ justifyContent: 'space-between' }}
+      ListHeaderComponent={
+        <View style={styles.headerWrapper}>
+          <Image
+            source={require('../../assets/icon-asma.png')}
+            style={styles.headerImage}
+            resizeMode="cover"
+          />
+          <TouchableOpacity style={styles.backIcon} onPress={() => router.back()}>
+            <Ionicons name="arrow-back" size={30} color="#fff" />
           </TouchableOpacity>
-        )}
-      />
-    </View>
+        </View>
+      }
+      renderItem={({ item, index }) => (
+        <TouchableOpacity
+          style={[styles.card, { backgroundColor: colorsArray[index % colorsArray.length] }]}
+        >
+          <Text style={styles.arab}>{item.arab}</Text>
+          <Text style={styles.latin}>{item.latin}</Text>
+          <Text style={styles.arti}>{item.arti}</Text>
+        </TouchableOpacity>
+      )}
+    />
   );
 }
 
 const styles = StyleSheet.create({
-  headerContainer: {
+  headerWrapper: {
     position: 'relative',
+    marginBottom: 16,
   },
-  fullHeaderImage: {
+  headerImage: {
     width: '100%',
     height: 210,
     borderBottomLeftRadius: 30,
@@ -88,7 +92,7 @@ const styles = StyleSheet.create({
     left: 20,
     backgroundColor: '#00000055',
     borderRadius: 20,
-    padding: 2,
+    padding: 4,
   },
   loadingContainer: {
     flex: 1,
@@ -101,12 +105,13 @@ const styles = StyleSheet.create({
     color: '#888',
   },
   gridContainer: {
-    padding: 12,
+    paddingHorizontal: 12,
+    paddingBottom: 20,
     backgroundColor: '#FFFFFF',
   },
   card: {
-    flex: 1,
-    margin: 6,
+    width: cardWidth,
+    marginBottom: 12,
     padding: 10,
     borderRadius: 16,
     alignItems: 'center',

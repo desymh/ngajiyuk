@@ -1,23 +1,26 @@
 import React from 'react';
 import {
   FlatList,
-  Image,
   StyleSheet,
   Text,
   TouchableOpacity,
   View,
   Dimensions,
+  Image,
 } from 'react-native';
 import { useRouter } from 'expo-router';
+import { Ionicons } from '@expo/vector-icons';
+
+const colorsArray = ['#FDEBD0', '#D6EAF8', '#D5F5E3', '#FADBD8', '#E8DAEF', '#FCF3CF'];
 
 const steps = [
-  { title: 'Niat', key: 'niat', image: require('../../assets/1.png') },
-  { title: 'Membasuh Muka', key: 'muka', image: require('../../assets/2.png') },
-  { title: 'Membasuh Tangan', key: 'tangan', image: require('../../assets/3.png') },
-  { title: 'Membasuh Kepala', key: 'kepala', image: require('../../assets/4.png') },
-  { title: 'Membasuh Telinga', key: 'telinga', image: require('../../assets/5.png') },
-  { title: 'Membasuh Kaki', key: 'kaki', image: require('../../assets/6.png') },
-  { title: 'Doa Setelah Wudhu', key: 'doa', image: require('../../assets/7.png') },
+  { title: 'Niat', key: 'niat' },
+  { title: 'Membasuh Muka', key: 'muka' },
+  { title: 'Membasuh Tangan', key: 'tangan' },
+  { title: 'Membasuh Kepala', key: 'kepala' },
+  { title: 'Membasuh Telinga', key: 'telinga' },
+  { title: 'Membasuh Kaki', key: 'kaki' },
+  { title: 'Doa Setelah Wudhu', key: 'doa' },
 ];
 
 export default function WudhuList() {
@@ -25,23 +28,30 @@ export default function WudhuList() {
 
   return (
     <FlatList
+      ListHeaderComponent={
+        <View style={styles.headerWrapper}>
+          <TouchableOpacity style={styles.backIcon} onPress={() => router.back()}>
+            <Ionicons name="arrow-back" size={26} color="#fff" />
+          </TouchableOpacity>
+          <Image
+            source={require('../../assets/wudhu.png')}
+            style={styles.headerImage}
+          />
+        </View>
+      }
       data={steps}
       numColumns={2}
       keyExtractor={(item, index) => index.toString()}
       contentContainerStyle={styles.listContainer}
       columnWrapperStyle={styles.row}
-      renderItem={({ item }) => (
+      renderItem={({ item, index }) => (
         <TouchableOpacity
-          style={styles.card}
+          style={[styles.card, { backgroundColor: colorsArray[index % colorsArray.length] }]}
           onPress={() =>
             router.push({ pathname: '/wudhu/detail', params: { step: item.key } })
           }
         >
-          <Image source={item.image} style={styles.cardBackground} />
-          <View style={styles.overlay} />
-          <View style={styles.textContainer}>
-            <Text style={styles.title}>{item.title}</Text>
-          </View>
+          <Text style={styles.title}>{item.title}</Text>
         </TouchableOpacity>
       )}
     />
@@ -51,48 +61,50 @@ export default function WudhuList() {
 const cardWidth = (Dimensions.get('window').width - 48) / 2;
 
 const styles = StyleSheet.create({
+  headerWrapper: {
+    position: 'relative',
+  },
+  backIcon: {
+    position: 'absolute',
+    top: 18,
+    left: 16,
+    zIndex: 10,
+    backgroundColor: 'rgba(0,0,0,0.4)',
+    padding: 6,
+    borderRadius: 40,
+  },
+  headerImage: {
+    width: '100%',
+    height: 210,
+    resizeMode: 'cover',
+    borderBottomLeftRadius: 30,
+    borderBottomRightRadius: 30,
+    marginBottom: 10,
+  },
   listContainer: {
     paddingHorizontal: 16,
-    paddingVertical: 20,
+    paddingBottom: 20,
     backgroundColor: '#FFFFFF',
-    flexGrow: 1, 
-    minHeight: '100%',
   },
   row: {
     justifyContent: 'space-between',
-    marginBottom: 16,
+    marginBottom: 12,
   },
   card: {
     width: cardWidth,
     aspectRatio: 1,
-    borderRadius: 20,
-    overflow: 'hidden',
+    borderRadius: 16,
     justifyContent: 'center',
     alignItems: 'center',
-    position: 'relative',
     borderWidth: 2,
     borderColor: '#fff',
-    backgroundColor: '#fff',
-  },
-  cardBackground: {
-    ...StyleSheet.absoluteFillObject,
-    resizeMode: 'cover',
-    width: '200%',
-    height: '140%',
-    alignSelf: 'center',
-  },
-  overlay: {
-    ...StyleSheet.absoluteFillObject,
-    backgroundColor: 'rgba(255,255,255,0.6)',
-  },
-  textContainer: {
-    zIndex: 2,
-    paddingHorizontal: 8,
+    elevation: 3,
   },
   title: {
-    fontSize: 14,
+    fontSize: 15,
     fontWeight: 'bold',
-    color: '#5D4037',
+    color: '#3E2723',
     textAlign: 'center',
+    paddingHorizontal: 10,
   },
 });

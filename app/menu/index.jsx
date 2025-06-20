@@ -1,5 +1,5 @@
 import { useRouter } from 'expo-router';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   Dimensions,
   ImageBackground,
@@ -40,8 +40,33 @@ const menuItems = [
   },
 ];
 
+const kataBijak = [
+  "📚 Ilmu tanpa amal adalah sia-sia.",
+  "🕌 Sholat adalah tiang agama, jangan tinggalkan.",
+  "🤲 Rezeki tidak akan tertukar.",
+  "💖 Bersyukurlah, maka Allah akan menambah nikmatmu.",
+  "🕊️ Allah bersama orang-orang yang sabar.",
+  "🧎‍♂️ Doa adalah senjata terbaik seorang mukmin.",
+  "⏳ Hidup hanya sebentar, perbanyak bekal akhirat.",
+  "✨ Kebaikan sekecil apapun akan dibalas oleh Allah.",
+  "🤍 Jangan iri dengan rezeki orang lain, Allah Maha Adil.",
+  "🌈 Setiap ujian pasti ada hikmahnya.",
+  "Allah selalu bersamamu 🤍✨",
+  "Senyum itu sedekah 😊",
+  "Belajar hari ini, pahala untuk selamanya 📖🌟",
+  "Jadilah anak yang sholeh/sholehah 🤲❤️",
+  "Berdoalah dengan hati yang tulus 🕊️",
+  "Jangan lupa baca Bismillah hari ini 📿",
+];
+
 export default function Menu() {
   const router = useRouter();
+  const [kataPilihan, setKataPilihan] = useState('');
+
+  useEffect(() => {
+    const randomIndex = Math.floor(Math.random() * kataBijak.length);
+    setKataPilihan(kataBijak[randomIndex]);
+  }, []);
 
   return (
     <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
@@ -75,8 +100,10 @@ export default function Menu() {
       />
 
       <View style={styles.recommendSection}>
-        <Text style={styles.recommendTitle}>Rekomendasi</Text>
-        <View style={styles.recommendCard}></View>
+        <Text style={styles.recommendTitle}>Motivasi Hari ini✨</Text>
+        <View style={styles.recommendCard}>
+          <Text style={styles.kataText}>{kataPilihan}</Text>
+        </View>
       </View>
     </ScrollView>
   );
@@ -147,7 +174,9 @@ const styles = StyleSheet.create({
     fontSize: 13,
     color: colors.text,
     textAlign: 'center',
-    marginTop: 6,
+    marginTop: 12,
+    paddingHorizontal: 10,
+    fontFamily: 'Fredoka_600SemiBold',
   },
   recommendSection: {
     marginTop: 30,
@@ -159,9 +188,18 @@ const styles = StyleSheet.create({
     color: '#333',
   },
   recommendCard: {
-    backgroundColor: '#FFE082',
-    height: 100,
+    backgroundColor: '#F9A528',
     borderRadius: 20,
     elevation: 3,
+    padding: 20,
+    alignItems: 'center',
+    justifyContent: 'center',
+    minHeight: 100,
+  },
+  kataText: {
+    fontSize: 16,
+    fontStyle: 'italic',
+    color: '#2c3e50',
+    textAlign: 'center',
   },
 });

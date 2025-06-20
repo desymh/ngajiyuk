@@ -1,11 +1,11 @@
 {
   "expo": {
-    "name": "ngajiyuk",
-    "slug": "ngajiyuk",
+    "name": "islamic_kids",
+    "slug": "islamic_kids",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
-    "scheme": "ngajiyuk",
+    "scheme": "islamic_kids",
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
     "ios": {

@@ -9,5 +9,7 @@ export const colors = {
 };
 
 export const font = {
-  family: 'Fredoka_400Regular',
+  regular: 'Fredoka_400Regular',
+  semiBold: 'Fredoka_600SemiBold',
+  bold: 'Fredoka_700Bold',
 };

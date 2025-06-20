@@ -9,6 +9,7 @@ import {
   View,
 } from 'react-native';
 import { useRouter } from 'expo-router';
+import { Ionicons } from '@expo/vector-icons';
 
 const colorsArray = ['#FDEBD0', '#D6EAF8', '#D5F5E3', '#FADBD8', '#E8DAEF', '#FCF3CF'];
 
@@ -40,40 +41,55 @@ export default function AsmaulHusna() {
   }
 
   return (
-    <FlatList
-      ListHeaderComponent={() => (
-        <View style={styles.headerSection}>
-          <View style={styles.headerTop}>
-            <Text style={styles.headerEmoji}>🌟</Text>
-            <Text style={styles.headerTitle}>Asmaul Husna</Text>
-            <Text style={styles.headerSubtitle}>
-              Yuk mengenal <Text style={{ fontWeight: 'bold' }}>99 nama indah</Text> Allah SWT!
-            </Text>
-          </View>
-          <Image
-            source={require('../../assets/anak-ngaji.png')} // pastikan file ini ada
-            style={styles.headerImage}
-          />
-        </View>
-      )}
-      data={data}
-      numColumns={3}
-      contentContainerStyle={styles.gridContainer}
-      keyExtractor={(item, index) => index.toString()}
-      renderItem={({ item, index }) => (
-        <TouchableOpacity
-          style={[styles.card, { backgroundColor: colorsArray[index % colorsArray.length] }]}
-        >
-          <Text style={styles.arab}>{item.arab}</Text>
-          <Text style={styles.latin}>{item.latin}</Text>
-          <Text style={styles.arti}>{item.arti}</Text>
+    <View style={{ flex: 1, backgroundColor: '#fff' }}>
+      <View style={styles.headerContainer}>
+        <Image
+          source={require('../../assets/icon-asma.png')}
+          style={styles.fullHeaderImage}
+          resizeMode="cover"
+        />
+        <TouchableOpacity onPress={() => router.back()} style={styles.backIcon}>
+          <Ionicons name="arrow-back-outline" size={35} color="#fff" />
         </TouchableOpacity>
-      )}
-    />
+      </View>
+
+      <FlatList
+        data={data}
+        numColumns={3}
+        contentContainerStyle={styles.gridContainer}
+        keyExtractor={(item, index) => index.toString()}
+        renderItem={({ item, index }) => (
+          <TouchableOpacity
+            style={[styles.card, { backgroundColor: colorsArray[index % colorsArray.length] }]}
+          >
+            <Text style={styles.arab}>{item.arab}</Text>
+            <Text style={styles.latin}>{item.latin}</Text>
+            <Text style={styles.arti}>{item.arti}</Text>
+          </TouchableOpacity>
+        )}
+      />
+    </View>
   );
 }
 
 const styles = StyleSheet.create({
+  headerContainer: {
+    position: 'relative',
+  },
+  fullHeaderImage: {
+    width: '100%',
+    height: 210,
+    borderBottomLeftRadius: 30,
+    borderBottomRightRadius: 30,
+  },
+  backIcon: {
+    position: 'absolute',
+    top: 40,
+    left: 20,
+    backgroundColor: '#00000055',
+    borderRadius: 20,
+    padding: 2,
+  },
   loadingContainer: {
     flex: 1,
     justifyContent: 'center',
@@ -84,38 +100,6 @@ const styles = StyleSheet.create({
     fontSize: 16,
     color: '#888',
   },
-  headerSection: {
-    backgroundColor: '#F9A528',
-    paddingTop: 40,
-    paddingBottom: 30,
-    paddingHorizontal: 16,
-    alignItems: 'center',
-    borderBottomLeftRadius: 30,
-    borderBottomRightRadius: 30,
-  },
-  headerTop: {
-    alignItems: 'center',
-    marginBottom: 10,
-  },
-  headerEmoji: {
-    fontSize: 30,
-  },
-  headerTitle: {
-    fontSize: 28,
-    fontWeight: 'bold',
-    color: '#fff',
-  },
-  headerSubtitle: {
-    fontSize: 14,
-    color: '#fff',
-    marginTop: 6,
-    textAlign: 'center',
-  },
-  headerImage: {
-    width: 100,
-    height: 100,
-    resizeMode: 'contain',
-  },
   gridContainer: {
     padding: 12,
     backgroundColor: '#FFFFFF',
@@ -123,11 +107,11 @@ const styles = StyleSheet.create({
   card: {
     flex: 1,
     margin: 6,
-    padding: 12,
+    padding: 10,
     borderRadius: 16,
     alignItems: 'center',
     justifyContent: 'center',
-    minHeight: 120,
+    minHeight: 110,
     elevation: 3,
   },
   arab: {
@@ -137,14 +121,14 @@ const styles = StyleSheet.create({
     marginBottom: 4,
   },
   latin: {
-    fontSize: 14,
+    fontSize: 13,
     color: '#333',
-    fontWeight: '600',
+    textAlign: 'center',
   },
   arti: {
-    fontSize: 12,
-    color: '#555',
+    fontSize: 11,
+    color: '#666',
     textAlign: 'center',
-    marginTop: 4,
+    marginTop: 2,
   },
 });

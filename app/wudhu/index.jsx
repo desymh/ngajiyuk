@@ -54,7 +54,7 @@ const styles = StyleSheet.create({
   listContainer: {
     paddingHorizontal: 16,
     paddingVertical: 20,
-    backgroundColor: '#F9A528',
+    backgroundColor: '#FFFFFF',
     flexGrow: 1, 
     minHeight: '100%',
   },

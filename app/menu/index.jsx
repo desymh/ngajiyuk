@@ -26,9 +26,9 @@ const menuItems = [
      color: '#D6EAF8',
   },
   {
-    title: 'Belajar Iqro',
+    title: 'asmaul husna',
     image: require('../../assets/anak-ngaji.png'),
-    route: '/belajar-iqro',
+    route: '/asmaul-husna',
     color: '#D5F5E3',
   },
   {

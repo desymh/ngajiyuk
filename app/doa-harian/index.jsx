@@ -7,6 +7,7 @@ import {
   Text,
   TouchableOpacity,
   View,
+  Dimensions,
 } from 'react-native';
 import { useRouter } from 'expo-router';
 
@@ -28,7 +29,6 @@ const imageMap = {
   'Doa Hendak Bepergian': require('../../assets/bepergian.png'),
   'Doa Menyambut Pagi hari': require('../../assets/pagi.png'),
   'Doa Menyambut Sore Hari': require('../../assets/sore.png'),
-  'Doa Sebelum Wudhu': require('../../assets/sebelum-w.png'),
   'Doa Memohon Rezeki': require('../../assets/rezeki.png'),
   'Doa Selamat dari Kedengkian': require('../../assets/dengki.png'),
   'Doa Sebelum Mandi': require('../../assets/sebelum_mandi.png'),
@@ -37,6 +37,7 @@ const imageMap = {
   'Doa Memohon Terlepas dari Kesulitan': require('../../assets/kesulitan.png'),
   default: require('../../assets/anak-berdoa.png'),
 };
+
 export default function DoaHarian() {
   const [doaList, setDoaList] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -70,7 +71,9 @@ export default function DoaHarian() {
     <FlatList
       data={doaList}
       keyExtractor={(item, index) => index.toString()}
+      numColumns={2}
       contentContainerStyle={styles.listContainer}
+      columnWrapperStyle={styles.row}
       renderItem={({ item }) => (
         <TouchableOpacity
           style={styles.cardWrapper}
@@ -89,6 +92,8 @@ export default function DoaHarian() {
   );
 }
 
+const cardWidth = (Dimensions.get('window').width - 48) / 2;
+
 const styles = StyleSheet.create({
   loadingContainer: {
     flex: 1,
@@ -101,22 +106,26 @@ const styles = StyleSheet.create({
     color: '#888',
   },
   listContainer: {
-    padding: 16,
+    paddingHorizontal: 16,
+    paddingVertical: 20,
     backgroundColor: '#F9A528',
   },
+  row: {
+    justifyContent: 'space-between',
+    marginBottom: 16,
+  },
   cardWrapper: {
-  width: '90%', 
-  aspectRatio: 1.8, 
-  marginBottom: 20,
-  borderRadius: 20,
-  overflow: 'hidden',
-  justifyContent: 'center',
-  alignItems: 'center',
-  position: 'relative',
-  borderWidth: 5,
-  borderColor: '#444',
-  alignSelf: 'center', 
-},
+    width: cardWidth,
+    aspectRatio: 1,
+    borderRadius: 20,
+    overflow: 'hidden',
+    justifyContent: 'center',
+    alignItems: 'center',
+    position: 'relative',
+    borderWidth: 2,
+    borderColor: '#fff',
+    backgroundColor: '#fff',
+  },
   backgroundImage: {
     ...StyleSheet.absoluteFillObject,
     width: '100%',
@@ -125,14 +134,14 @@ const styles = StyleSheet.create({
   },
   overlay: {
     ...StyleSheet.absoluteFillObject,
-    backgroundColor: 'rgba(255,255,255,0.6)', 
+    backgroundColor: 'rgba(255,255,255,0.6)',
   },
   textContainer: {
     zIndex: 2,
-    paddingHorizontal: 16,
+    paddingHorizontal: 8,
   },
   title: {
-    fontSize: 18,
+    fontSize: 14,
     fontWeight: 'bold',
     color: '#5D4037',
     textAlign: 'center',

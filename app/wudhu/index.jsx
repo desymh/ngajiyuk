@@ -6,17 +6,18 @@ import {
   Text,
   TouchableOpacity,
   View,
+  Dimensions,
 } from 'react-native';
 import { useRouter } from 'expo-router';
 
 const steps = [
-  { title: 'Niat', key: 'niat', image: require('../../assets/1.png'), color: '#FDEBD0' },
-  { title: 'Membasuh Muka', key: 'muka', image: require('../../assets/2.png'), color: '#D6EAF8' },
-  { title: 'Membasuh Tangan', key: 'tangan', image: require('../../assets/3.png'), color: '#D5F5E3' },
-  { title: 'Membasuh Kepala', key: 'kepala', image: require('../../assets/4.png'), color: '#FADBD8' },
-  { title: 'Membasuh Telinga', key: 'telinga', image: require('../../assets/5.png'), color: '#FCF3CF' },
-  { title: 'Membasuh Kaki', key: 'kaki', image: require('../../assets/6.png'), color: '#E8DAEF' },
-  { title: 'Doa Setelah Wudhu', key: 'doa', image: require('../../assets/7.png'), color: '#D1F2EB' },
+  { title: 'Niat', key: 'niat', image: require('../../assets/1.png') },
+  { title: 'Membasuh Muka', key: 'muka', image: require('../../assets/2.png') },
+  { title: 'Membasuh Tangan', key: 'tangan', image: require('../../assets/3.png') },
+  { title: 'Membasuh Kepala', key: 'kepala', image: require('../../assets/4.png') },
+  { title: 'Membasuh Telinga', key: 'telinga', image: require('../../assets/5.png') },
+  { title: 'Membasuh Kaki', key: 'kaki', image: require('../../assets/6.png') },
+  { title: 'Doa Setelah Wudhu', key: 'doa', image: require('../../assets/7.png') },
 ];
 
 export default function WudhuList() {
@@ -25,61 +26,73 @@ export default function WudhuList() {
   return (
     <FlatList
       data={steps}
+      numColumns={2}
       keyExtractor={(item, index) => index.toString()}
       contentContainerStyle={styles.listContainer}
+      columnWrapperStyle={styles.row}
       renderItem={({ item }) => (
         <TouchableOpacity
-          style={[styles.card, { backgroundColor: item.color }]}
+          style={styles.card}
           onPress={() =>
             router.push({ pathname: '/wudhu/detail', params: { step: item.key } })
           }
         >
           <Image source={item.image} style={styles.cardBackground} />
-          <Text style={styles.title}>{item.title}</Text>
+          <View style={styles.overlay} />
+          <View style={styles.textContainer}>
+            <Text style={styles.title}>{item.title}</Text>
+          </View>
         </TouchableOpacity>
       )}
     />
   );
 }
 
+const cardWidth = (Dimensions.get('window').width - 48) / 2;
+
 const styles = StyleSheet.create({
   listContainer: {
-    padding: 16,
-    backgroundColor: '#FFFDE7',
+    paddingHorizontal: 16,
+    paddingVertical: 20,
+    backgroundColor: '#F9A528',
+    flexGrow: 1, 
+    minHeight: '100%',
+  },
+  row: {
+    justifyContent: 'space-between',
+    marginBottom: 16,
   },
   card: {
-    width: '92%',
-    height: 180,
-    alignSelf: 'center',
-    borderRadius: 30,
-    padding: 20,
-    marginBottom: 20,
+    width: cardWidth,
+    aspectRatio: 1,
+    borderRadius: 20,
     overflow: 'hidden',
     justifyContent: 'center',
     alignItems: 'center',
-    elevation: 6,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 3 },
-    shadowOpacity: 0.1,
-    shadowRadius: 6,
+    position: 'relative',
+    borderWidth: 2,
+    borderColor: '#fff',
+    backgroundColor: '#fff',
   },
   cardBackground: {
     ...StyleSheet.absoluteFillObject,
-  position: 'absolute',
-  top: 0,
-  left: 0,
-  width: '200%',
-  height: '200%',
-  resizeMode: 'cover',
-  opacity: 0.15,
-  transform: [{ translateX: -50 }, { translateY: -30 }],
-  borderRadius: 30,
-},
-
+    resizeMode: 'cover',
+    width: '200%',
+    height: '140%',
+    alignSelf: 'center',
+  },
+  overlay: {
+    ...StyleSheet.absoluteFillObject,
+    backgroundColor: 'rgba(255,255,255,0.6)',
+  },
+  textContainer: {
+    zIndex: 2,
+    paddingHorizontal: 8,
+  },
   title: {
-    fontSize: 22,
+    fontSize: 14,
     fontWeight: 'bold',
-    color: '#2c3e50',
+    color: '#5D4037',
     textAlign: 'center',
   },
 });

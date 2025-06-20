@@ -12,32 +12,8 @@ import {
 import { useRouter } from 'expo-router';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
-const imageMap = {
-  'Doa Sebelum Tidur': require('../../assets/sebelum_tidur.png'),
-  'Doa Bangun Tidur': require('../../assets/bangun_tidur.png'),
-  'Doa Masuk Kamar Mandi': require('../../assets/masuk_toilet.png'),
-  'Doa Keluar Kamar Mandi': require('../../assets/keluar_toilet.png'),
-  'Doa Sebelum Belajar': require('../../assets/sebelum_belajar.png'),
-  'Doa Sesudah Belajar': require('../../assets/sesudah_belajar.png'),
-  'Doa Ketika Bercermin': require('../../assets/bercermin.png'),
-  'Doa Masuk Rumah': require('../../assets/masuk_rumah.png'),
-  'Doa Keluar Rumah': require('../../assets/keluar_rumah.png'),
-  'Doa Setelah Membaca Al-Quran': require('../../assets/sesudah_ngaji.png'),
-  'Doa Sebelum Membaca Al-Quran': require('../../assets/sebelum_ngaji.png'),
-  'Doa Memohon Ilmu Yang Bermanfaat': require('../../assets/ilmu.png'),
-  'Doa Sebelum Wudhu': require('../../assets/sebelum-w.png'),
-  'Doa Setelah Wudhu': require('../../assets/sesudah-w.png'),
-  'Doa Hendak Bepergian': require('../../assets/bepergian.png'),
-  'Doa Menyambut Pagi hari': require('../../assets/pagi.png'),
-  'Doa Menyambut Sore Hari': require('../../assets/sore.png'),
-  'Doa Memohon Rezeki': require('../../assets/rezeki.png'),
-  'Doa Selamat dari Kedengkian': require('../../assets/dengki.png'),
-  'Doa Sebelum Mandi': require('../../assets/sebelum_mandi.png'),
-  'Doa Ketika Sampai di Tempat Tujuan': require('../../assets/tujuan.png'),
-  'Doa Menjelang Sholat Shubuh': require('../../assets/menjelang-subuh.png'),
-  'Doa Memohon Terlepas dari Kesulitan': require('../../assets/kesulitan.png'),
-  default: require('../../assets/anak-berdoa.png'),
-};
+const colorsArray = ['#FDEBD0', '#D6EAF8', '#D5F5E3', '#FADBD8', '#E8DAEF', '#FCF3CF'];
+const cardWidth = (Dimensions.get('window').width - 64) / 3;
 
 export default function DoaHarian() {
   const [doaList, setDoaList] = useState([]);
@@ -56,8 +32,6 @@ export default function DoaHarian() {
         setLoading(false);
       });
   }, []);
-
-  const getImage = (title) => imageMap[title] || imageMap.default;
 
   if (loading) {
     return (
@@ -86,25 +60,19 @@ export default function DoaHarian() {
       numColumns={3}
       contentContainerStyle={styles.listContainer}
       columnWrapperStyle={styles.row}
-      renderItem={({ item }) => (
+      renderItem={({ item, index }) => (
         <TouchableOpacity
-          style={styles.cardWrapper}
+          style={[styles.cardWrapper, { backgroundColor: colorsArray[index % colorsArray.length] }]}
           onPress={() =>
             router.push({ pathname: '/doa-harian/[id]', params: { id: item.judul } })
           }
         >
-          <Image source={getImage(item.judul)} style={styles.backgroundImage} />
-          <View style={styles.overlay} />
-          <View style={styles.textContainer}>
-            <Text style={styles.title}>{item.judul}</Text>
-          </View>
+          <Text style={styles.title}>{item.judul}</Text>
         </TouchableOpacity>
       )}
     />
   );
 }
-
-const cardWidth = (Dimensions.get('window').width - 64) / 3;
 
 const styles = StyleSheet.create({
   loadingContainer: {
@@ -119,6 +87,7 @@ const styles = StyleSheet.create({
   },
   headerContainer: {
     position: 'relative',
+    marginBottom: 16, 
   },
   headerImage: {
     width: '100%',
@@ -136,6 +105,7 @@ const styles = StyleSheet.create({
     borderRadius: 20,
   },
   listContainer: {
+    paddingHorizontal: 16,
     paddingBottom: 20,
     backgroundColor: '#FFFFFF',
   },
@@ -147,32 +117,17 @@ const styles = StyleSheet.create({
     width: cardWidth,
     aspectRatio: 1,
     borderRadius: 16,
-    overflow: 'hidden',
     justifyContent: 'center',
     alignItems: 'center',
-    position: 'relative',
     borderWidth: 2,
     borderColor: '#fff',
-    backgroundColor: '#fff',
-  },
-  backgroundImage: {
-    ...StyleSheet.absoluteFillObject,
-    width: '100%',
-    height: '100%',
-    resizeMode: 'cover',
-  },
-  overlay: {
-    ...StyleSheet.absoluteFillObject,
-    backgroundColor: 'rgba(255,255,255,0.3)',
-  },
-  textContainer: {
-    zIndex: 2,
-    paddingHorizontal: 6,
+    elevation: 3,
   },
   title: {
     fontSize: 13,
-    fontWeight: '900',
+    fontWeight: 'bold',
     color: '#3E2723',
     textAlign: 'center',
+    paddingHorizontal: 4,
   },
 });

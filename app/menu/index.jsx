@@ -2,6 +2,7 @@ import { useRouter } from 'expo-router';
 import React from 'react';
 import {
   Dimensions,
+  ImageBackground,
   Image,
   StyleSheet,
   Text,
@@ -47,16 +48,11 @@ export default function Menu() {
       <Text style={styles.header}>Islamic Kids</Text>
 
       <TouchableOpacity style={styles.heroCard}>
-        <View style={styles.heroContent}>
-          <View style={{ flex: 1 }}>
-            <Text style={styles.heroTitle}>Mulai Belajar</Text>
-            <Text style={styles.heroSubtitle}>Mari belajar sambil bermain</Text>
-          </View>
-          <Image
-            source={require('../../assets/anak-ngaji.png')}
-            style={styles.heroImage}
-          />
-        </View>
+        <ImageBackground
+          source={require('../../assets/ayo-belajar.png')}
+          style={styles.heroImageFull}
+          imageStyle={{ borderRadius: 20 }}
+        />
       </TouchableOpacity>
 
       <FlatList
@@ -80,8 +76,7 @@ export default function Menu() {
 
       <View style={styles.recommendSection}>
         <Text style={styles.recommendTitle}>Rekomendasi</Text>
-        <View style={styles.recommendCard}>
-        </View>
+        <View style={styles.recommendCard}></View>
       </View>
     </ScrollView>
   );
@@ -104,37 +99,19 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   heroCard: {
-    backgroundColor: '#FDCB6E',
+    height: 220,
     borderRadius: 20,
-    padding: 20,
-    marginHorizontal: 8,
+    overflow: 'hidden',
     marginBottom: 30,
+    elevation: 5,
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 4 },
     shadowOpacity: 0.1,
     shadowRadius: 6,
-    elevation: 5,
-    minHeight: 220,
   },
-  heroContent: {
-    flexDirection: 'row',
-    alignItems: 'center',
-  },
-  heroTitle: {
-    fontSize: 22,
-    fontWeight: 'bold',
-    color: '#6A1B9A',
-    marginBottom: 6,
-  },
-  heroSubtitle: {
-    fontSize: 14,
-    color: '#555',
-  },
-  heroImage: {
-    width: 120,
-    height: 120,
-    resizeMode: 'contain',
-    marginLeft: 10,
+  heroImageFull: {
+    flex: 1,
+    width: '100%',
   },
   menuScroll: {
     paddingVertical: 10,

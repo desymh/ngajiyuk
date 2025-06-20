@@ -37,6 +37,7 @@ const gambarDoa = {
   'Doa Memohon Terlepas dari Kesulitan': require('../../assets/kesulitan.png'),
   default: require('../../assets/anak-berdoa.png'),
 };
+
 export default function DetailDoa() {
   const { id } = useLocalSearchParams();
   const router = useRouter();
@@ -80,14 +81,15 @@ export default function DetailDoa() {
     <ScrollView style={styles.scroll}>
       <View style={styles.imageWrapper}>
         <ImageBackground source={imageSource} style={styles.headerImage} imageStyle={styles.headerImageStyle}>
+          <View style={styles.overlay} />
           <TouchableOpacity onPress={() => router.back()} style={styles.backButton}>
             <Text style={styles.backArrow}>←</Text>
           </TouchableOpacity>
+          <Text style={styles.title}>{doa.judul}</Text>
         </ImageBackground>
       </View>
 
-      <View style={styles.content}>
-        <Text style={styles.title}>{doa.judul}</Text>
+      <View style={styles.card}>
         <Text style={styles.arab}>{doa.arab}</Text>
         <Text style={styles.latin}>{doa.latin}</Text>
         <Text style={styles.arti}>{doa.arti}</Text>
@@ -102,47 +104,64 @@ const styles = StyleSheet.create({
     backgroundColor: '#fffde7',
   },
   imageWrapper: {
-    backgroundColor: '#fff',
-    borderBottomLeftRadius: 40,
-    borderBottomRightRadius: 40,
+    borderBottomLeftRadius: 30,
+    borderBottomRightRadius: 30,
     overflow: 'hidden',
   },
   headerImage: {
     width: '100%',
-    height: 400, 
-    paddingHorizontal: 20,
-    justifyContent: 'flex-start',
+    height: 280,
+    justifyContent: 'flex-end',
+    padding: 20,
   },
   headerImageStyle: {
     resizeMode: 'cover',
   },
+  overlay: {
+    ...StyleSheet.absoluteFillObject,
+    backgroundColor: 'rgba(0,0,0,0.3)',
+  },
   backButton: {
+    position: 'absolute',
+    top: 40,
+    left: 20,
     backgroundColor: '#ffffffcc',
     width: 36,
     height: 36,
     borderRadius: 18,
     alignItems: 'center',
     justifyContent: 'center',
+    zIndex: 2,
   },
   backArrow: {
     fontSize: 22,
     color: '#333',
   },
-  content: {
-    padding: 20,
-  },
   title: {
-    fontSize: 24,
+    fontSize: 22,
     fontWeight: 'bold',
-    color: '#e67e22',
-    marginBottom: 15,
+    color: '#fff',
     textAlign: 'center',
+    backgroundColor: 'rgba(0,0,0,0.3)',
+    paddingVertical: 6,
+    borderRadius: 10,
+  },
+  card: {
+    backgroundColor: '#fff',
+    margin: 16,
+    borderRadius: 16,
+    padding: 20,
+    elevation: 3,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.2,
+    shadowRadius: 4,
   },
   arab: {
     fontSize: 26,
     textAlign: 'right',
     color: '#2c3e50',
-    marginBottom: 10,
+    marginBottom: 12,
   },
   latin: {
     fontStyle: 'italic',

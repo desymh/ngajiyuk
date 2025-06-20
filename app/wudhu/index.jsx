@@ -25,9 +25,17 @@ const steps = [
 
 export default function WudhuList() {
   const router = useRouter();
+  const screenWidth = Dimensions.get('window').width;
+  const cardWidth = (screenWidth - 48) / 3;
 
   return (
     <FlatList
+      style={{ backgroundColor: '#FFFFFF', flex: 1 }} 
+      data={steps}
+      numColumns={3}
+      keyExtractor={(item, index) => index.toString()}
+      contentContainerStyle={styles.listContainer}
+      columnWrapperStyle={styles.row}
       ListHeaderComponent={
         <View style={styles.headerWrapper}>
           <TouchableOpacity style={styles.backIcon} onPress={() => router.back()}>
@@ -39,14 +47,9 @@ export default function WudhuList() {
           />
         </View>
       }
-      data={steps}
-      numColumns={2}
-      keyExtractor={(item, index) => index.toString()}
-      contentContainerStyle={styles.listContainer}
-      columnWrapperStyle={styles.row}
       renderItem={({ item, index }) => (
         <TouchableOpacity
-          style={[styles.card, { backgroundColor: colorsArray[index % colorsArray.length] }]}
+          style={[styles.card, { backgroundColor: colorsArray[index % colorsArray.length], width: cardWidth }]}
           onPress={() =>
             router.push({ pathname: '/wudhu/detail', params: { step: item.key } })
           }
@@ -58,15 +61,13 @@ export default function WudhuList() {
   );
 }
 
-const cardWidth = (Dimensions.get('window').width - 48) / 2;
-
 const styles = StyleSheet.create({
   headerWrapper: {
     position: 'relative',
   },
   backIcon: {
     position: 'absolute',
-    top: 18,
+    top: 40,
     left: 16,
     zIndex: 10,
     backgroundColor: 'rgba(0,0,0,0.4)',
@@ -91,7 +92,6 @@ const styles = StyleSheet.create({
     marginBottom: 12,
   },
   card: {
-    width: cardWidth,
     aspectRatio: 1,
     borderRadius: 16,
     justifyContent: 'center',

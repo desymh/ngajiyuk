@@ -1,19 +1,22 @@
 import React, { useEffect, useState } from 'react';
 import {
   ActivityIndicator,
-  FlatList,
+  Dimensions,
   Image,
+  ScrollView,
   StyleSheet,
   Text,
   TouchableOpacity,
   View,
-  Dimensions,
 } from 'react-native';
 import { useRouter } from 'expo-router';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
+const screenWidth = Dimensions.get('window').width;
+const cardMargin = 16;
+const cardWidth = (screenWidth - cardMargin * 3) / 2;
+
 const colorsArray = ['#FDEBD0', '#D6EAF8', '#D5F5E3', '#FADBD8', '#E8DAEF', '#FCF3CF'];
-const cardWidth = (Dimensions.get('window').width - 64) / 3;
 
 export default function DoaHarian() {
   const [doaList, setDoaList] = useState([]);
@@ -43,38 +46,49 @@ export default function DoaHarian() {
   }
 
   return (
-    <FlatList
-      ListHeaderComponent={
-        <View style={styles.headerContainer}>
+    <View style={styles.container}>
+      {/* HEADER BAR STICKY */}
+      <View style={styles.headerBar}>
+        <TouchableOpacity style={styles.backButton} onPress={() => router.back()}>
+          <Ionicons name="arrow-back" size={24} color="#fff" />
+        </TouchableOpacity>
+        <Text style={styles.headerTitle}>Doa Harian</Text>
+      </View>
+
+      {/* SCROLLABLE BODY */}
+      <ScrollView contentContainerStyle={styles.scrollContent}>
+        {/* HEADER IMAGE */}
+        <View style={styles.headerImageContainer}>
           <Image
             source={require('../../assets/icon-doa.png')}
             style={styles.headerImage}
           />
-          <TouchableOpacity style={styles.backButton} onPress={() => router.back()}>
-            <Ionicons name="arrow-back" size={28} color="#fff" />
-          </TouchableOpacity>
         </View>
-      }
-      data={doaList}
-      keyExtractor={(item, index) => index.toString()}
-      numColumns={3}
-      contentContainerStyle={styles.listContainer}
-      columnWrapperStyle={styles.row}
-      renderItem={({ item, index }) => (
-        <TouchableOpacity
-          style={[styles.cardWrapper, { backgroundColor: colorsArray[index % colorsArray.length] }]}
-          onPress={() =>
-            router.push({ pathname: '/doa-harian/[id]', params: { id: item.judul } })
-          }
-        >
-          <Text style={styles.title}>{item.judul}</Text>
-        </TouchableOpacity>
-      )}
-    />
+
+        {/* 2 COLUMN LIST */}
+        <View style={styles.grid}>
+          {doaList.map((item, index) => (
+            <TouchableOpacity
+              key={index}
+              style={[styles.cardWrapper, { backgroundColor: colorsArray[index % colorsArray.length] }]}
+              onPress={() =>
+                router.push({ pathname: '/doa-harian/[id]', params: { id: item.judul } })
+              }
+            >
+              <Text style={styles.cardText}>{item.judul}</Text>
+            </TouchableOpacity>
+          ))}
+        </View>
+      </ScrollView>
+    </View>
   );
 }
 
 const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: '#FDFDFD',
+  },
   loadingContainer: {
     flex: 1,
     justifyContent: 'center',
@@ -85,33 +99,45 @@ const styles = StyleSheet.create({
     fontSize: 16,
     color: '#888',
   },
-  headerContainer: {
-    position: 'relative',
-    marginBottom: 16, 
+  headerBar: {
+    backgroundColor: '#FFA726',
+    paddingTop: 50,
+    paddingBottom: 16,
+    paddingHorizontal: 16,
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  backButton: {
+    marginRight: 12,
+    backgroundColor: 'rgba(0,0,0,0.2)',
+    borderRadius: 20,
+    padding: 6,
+  },
+  headerTitle: {
+    fontSize: 20,
+    color: '#fff',
+    fontWeight: 'bold',
+  },
+  scrollContent: {
+    paddingBottom: 40,
+  },
+  headerImageContainer: {
+    marginHorizontal: 16,
+    marginTop: 16,
+    marginBottom: 12,
+    borderRadius: 20,
+    overflow: 'hidden',
   },
   headerImage: {
     width: '100%',
-    height: 210,
+    height: 180,
     resizeMode: 'cover',
-    borderBottomLeftRadius: 30,
-    borderBottomRightRadius: 30,
   },
-  backButton: {
-    position: 'absolute',
-    top: 40,
-    left: 20,
-    backgroundColor: 'rgba(0,0,0,0.3)',
-    padding: 6,
-    borderRadius: 20,
-  },
-  listContainer: {
+  grid: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
     paddingHorizontal: 16,
-    paddingBottom: 20,
-    backgroundColor: '#FFFFFF',
-  },
-  row: {
     justifyContent: 'space-between',
-    marginBottom: 12,
   },
   cardWrapper: {
     width: cardWidth,
@@ -119,15 +145,14 @@ const styles = StyleSheet.create({
     borderRadius: 16,
     justifyContent: 'center',
     alignItems: 'center',
-    borderWidth: 2,
-    borderColor: '#fff',
     elevation: 3,
+    marginBottom: 16,
+    padding: 8,
   },
-  title: {
-    fontSize: 13,
+  cardText: {
+    fontSize: 14,
     fontWeight: 'bold',
     color: '#3E2723',
     textAlign: 'center',
-    paddingHorizontal: 4,
   },
 });

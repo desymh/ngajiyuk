@@ -14,30 +14,10 @@ import {
 import { colors, font } from '../../constants/theme';
 
 const menuItems = [
-  {
-    title: 'Doa Harian',
-    image: require('../../assets/icon-d.png'),
-    route: '/doa-harian',
-    color: '#FDEBD0',
-  },
-  {
-    title: 'Bacaan Sholat',
-    image: require('../../assets/icon-s.png'),
-    route: '/bacaan-sholat',
-    color: '#D6EAF8',
-  },
-  {
-    title: 'Asmaul Husna',
-    image: require('../../assets/icon-a.png'),
-    route: '/asmaul-husna',
-    color: '#D5F5E3',
-  },
-  {
-    title: 'Niat Wudhu',
-    image: require('../../assets/icon-w.png'),
-    route: '/wudhu',
-    color: '#FADBD8',
-  },
+  { title: 'Doa Harian', image: require('../../assets/icon-d.png'), route: '/doa-harian', color: '#FDEBD0' },
+  { title: 'Bacaan Sholat', image: require('../../assets/icon-s.png'), route: '/bacaan-sholat', color: '#D6EAF8' },
+  { title: 'Asmaul Husna', image: require('../../assets/icon-a.png'), route: '/asmaul-husna', color: '#D5F5E3' },
+  { title: 'Niat Wudhu', image: require('../../assets/icon-w.png'), route: '/wudhu', color: '#FADBD8' },
 ];
 
 const kataBijak = [
@@ -59,17 +39,48 @@ const kataBijak = [
   "Jangan lupa baca Bismillah hari ini 📿",
 ];
 
+const faktaIslami = [
+  "Nabi Muhammad SAW sangat menyukai aroma wangi dan bersiwak 🌿",
+  "Malaikat akan mendoakan orang yang tidur dalam keadaan suci 🧼",
+  "Al-Qur’an adalah cahaya bagi hati dan petunjuk hidup kita 📖✨",
+  "Mengucapkan salam bisa mendatangkan pahala besar 🤝",
+  "Membaca Bismillah sebelum makan membuat setan tidak ikut makan 🍽️🚫",
+];
+
+const tebakanIslami = [
+  { question: "Apa nama bulan suci umat Islam? 🌙", answer: "Ramadhan" },
+  { question: "Berapa rakaat sholat Subuh? 🌅", answer: "2 rakaat" },
+  { question: "Siapakah nabi terakhir? 🤲", answer: "Nabi Muhammad SAW" },
+  { question: "Kitab suci umat Islam adalah? 📖", answer: "Al-Qur’an" },
+  { question: "Hari raya umat Islam disebut? 🎉", answer: "Idul Fitri" },
+  { question: "Apa arah kiblat umat Islam saat sholat? 🧭", answer: "Ka'bah di Mekah" },
+  { question: "Apa yang harus dibaca sebelum makan? 🍽️", answer: "Bismillah" },
+  { question: "Nama kitab yang diturunkan kepada Nabi Musa? 📜", answer: "Taurat" },
+  { question: "Apa arti 'Assalamu’alaikum'? 🤝", answer: "Semoga keselamatan tercurah untukmu" },
+  { question: "Berapa kali dalam sehari umat Islam sholat? 🕋", answer: "5 kali" },
+  { question: "Apa yang dilakukan sebelum sholat? 💧", answer: "Wudhu" },
+  { question: "Apa nama malam yang lebih baik dari 1000 bulan? 🌌", answer: "Lailatul Qadar" },
+  { question: "Siapa sahabat yang menemani Nabi hijrah ke Madinah? 🐫", answer: "Abu Bakar" },
+  { question: "Apa bacaan untuk membuka sholat? 🙏", answer: "Takbir (Allahu Akbar)" },
+  { question: "Apa nama tempat suci di Mekah? 🕋", answer: "Ka'bah" }
+];
+
+
 export default function Menu() {
   const router = useRouter();
   const [kataPilihan, setKataPilihan] = useState('');
+  const [faktaPilihan, setFaktaPilihan] = useState('');
+  const [tebakanPilihan, setTebakanPilihan] = useState(null);
+  const [showJawaban, setShowJawaban] = useState(false);
 
   useEffect(() => {
-    const randomIndex = Math.floor(Math.random() * kataBijak.length);
-    setKataPilihan(kataBijak[randomIndex]);
+    setKataPilihan(kataBijak[Math.floor(Math.random() * kataBijak.length)]);
+    setFaktaPilihan(faktaIslami[Math.floor(Math.random() * faktaIslami.length)]);
+    setTebakanPilihan(tebakanIslami[Math.floor(Math.random() * tebakanIslami.length)]);
   }, []);
 
   return (
-    <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
+    <ScrollView style={styles.container} showsVerticalScrollIndicator={false} contentContainerStyle={{ paddingBottom: 80 }}>
       <Text style={styles.header}>Islamic Kids</Text>
 
       <TouchableOpacity style={styles.heroCard}>
@@ -98,18 +109,27 @@ export default function Menu() {
           </TouchableOpacity>
         )}
       />
-
       <View style={styles.recommendSection}>
-        <Text style={styles.recommendTitle}>Motivasi Hari ini✨</Text>
+        <Text style={styles.recommendTitle}>Motivasi Hari ini ✨</Text>
         <View style={styles.recommendCard}>
           <Text style={styles.kataText}>{kataPilihan}</Text>
         </View>
       </View>
+      <View style={styles.faktaCard}>
+        <Text style={styles.faktaTitle}>Tahukah Kamu? 🧐</Text>
+        <Text style={styles.faktaText}>{faktaPilihan}</Text>
+      </View>
+      <View style={styles.quizCard}>
+        <TouchableOpacity onPress={() => setShowJawaban(!showJawaban)}>
+          <Text style={styles.quizText}>
+            {tebakanPilihan?.question}
+            {showJawaban ? `\n➜ ${tebakanPilihan.answer}` : '\n(klik aku👇)'}
+          </Text>
+        </TouchableOpacity>
+      </View>
     </ScrollView>
   );
 }
-
-const screenWidth = Dimensions.get('window').width;
 
 const styles = StyleSheet.create({
   container: {
@@ -170,7 +190,6 @@ const styles = StyleSheet.create({
     transform: [{ scale: 1.8 }],
   },
   menuLabel: {
-    fontFamily: font.family,
     fontSize: 13,
     color: colors.text,
     textAlign: 'center',
@@ -188,7 +207,7 @@ const styles = StyleSheet.create({
     color: '#333',
   },
   recommendCard: {
-    backgroundColor: '#F9A528',
+    backgroundColor: '#FFF3E0',
     borderRadius: 20,
     elevation: 3,
     padding: 20,
@@ -198,8 +217,56 @@ const styles = StyleSheet.create({
   },
   kataText: {
     fontSize: 16,
-    fontStyle: 'italic',
     color: '#2c3e50',
     textAlign: 'center',
+    fontFamily: 'Fredoka_600SemiBold',
+  },
+  faktaCard: {
+    backgroundColor: '#FFF3E0',
+    borderRadius: 20,
+    elevation: 3,
+    padding: 20,
+    alignItems: 'center',
+    justifyContent: 'center',
+    minHeight: 100,
+    marginTop: 25,
+  },
+  faktaTitle: {
+    fontSize: 16,
+    color: '#333',
+    marginBottom: 10,
+    textAlign: 'center',
+    fontFamily: 'Fredoka_500Medium',
+  },
+  faktaText: {
+    fontSize: 15,
+    color: '#333',
+    textAlign: 'center',
+    fontFamily: 'Fredoka_500Medium',
+    lineHeight: 22,
+  },
+  quizCard: {
+    backgroundColor: '#FFF3E0',
+    borderRadius: 20,
+    elevation: 3,
+    padding: 20,
+    alignItems: 'center',
+    justifyContent: 'center',
+    minHeight: 100,
+    marginTop: 25,
+  },
+  quizTitle: {
+    fontSize: 16,
+    color: '#333', 
+    marginBottom: 10,
+    textAlign: 'center',
+    fontFamily: 'Fredoka_500Medium',
+  },
+  quizText: {
+    fontSize: 15,
+    color: '#4E342E',
+    textAlign: 'center',
+    fontFamily: 'Fredoka_500Medium',
+    lineHeight: 22,
   },
 });

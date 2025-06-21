@@ -65,7 +65,6 @@ const tebakanIslami = [
   { question: "Apa nama tempat suci di Mekah? 🕋", answer: "Ka'bah" }
 ];
 
-
 export default function Menu() {
   const router = useRouter();
   const [kataPilihan, setKataPilihan] = useState('');
@@ -81,8 +80,15 @@ export default function Menu() {
 
   return (
     <ScrollView style={styles.container} showsVerticalScrollIndicator={false} contentContainerStyle={{ paddingBottom: 80 }}>
-      <Text style={styles.header}>Islamic Kids</Text>
-
+      <View style={styles.headerContainer}>
+        <View>
+          <Text style={styles.headerTitle}>Islamic Kids</Text>
+          <Text style={styles.headerSub}>kids education.</Text>
+        </View>
+        <View style={styles.headerIconWrapper}>
+          <Image source={require('../../assets/splash-anak.png')} style={styles.headerIcon} />
+        </View>
+      </View>
       <TouchableOpacity style={styles.heroCard}>
         <ImageBackground
           source={require('../../assets/ayo-belajar.png')}
@@ -90,7 +96,6 @@ export default function Menu() {
           imageStyle={{ borderRadius: 20 }}
         />
       </TouchableOpacity>
-
       <FlatList
         data={menuItems}
         horizontal
@@ -138,12 +143,36 @@ const styles = StyleSheet.create({
     paddingTop: 50,
     paddingHorizontal: 20,
   },
-  header: {
-    fontSize: 28,
-    fontFamily: 'Fredoka_400Regular',
+  headerContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginBottom: 25,
+  },
+  headerTitle: {
+    fontSize: 27,
     fontWeight: 'bold',
-    color: colors.primary,
-    marginBottom: 20,
+    fontFamily: 'Fredoka_700Bold',
+    color: '#F9A528',
+  },
+  headerSub: {
+    fontSize: 12,
+    color: '#888',
+    marginTop: 4,
+    fontFamily: 'Fredoka_400Regular',
+  },
+  headerIconWrapper: {
+    width: 40,
+    height: 40,
+    backgroundColor: '#FFA500',
+    borderRadius: 12,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  headerIcon: {
+    width: 24,
+    height: 24,
+    resizeMode: 'contain',
   },
   heroCard: {
     height: 220,
@@ -254,13 +283,6 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     minHeight: 100,
     marginTop: 25,
-  },
-  quizTitle: {
-    fontSize: 16,
-    color: '#333', 
-    marginBottom: 10,
-    textAlign: 'center',
-    fontFamily: 'Fredoka_500Medium',
   },
   quizText: {
     fontSize: 15,

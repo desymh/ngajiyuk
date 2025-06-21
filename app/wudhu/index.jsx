@@ -1,15 +1,20 @@
 import React from 'react';
 import {
+  Dimensions,
   FlatList,
+  Image,
   StyleSheet,
   Text,
   TouchableOpacity,
   View,
-  Dimensions,
-  Image,
+  ScrollView,
 } from 'react-native';
 import { useRouter } from 'expo-router';
-import { Ionicons } from '@expo/vector-icons';
+import Ionicons from 'react-native-vector-icons/Ionicons';
+
+const screenWidth = Dimensions.get('window').width;
+const cardMargin = 16;
+const cardWidth = (screenWidth - cardMargin * 3) / 2;
 
 const colorsArray = ['#FDEBD0', '#D6EAF8', '#D5F5E3', '#FADBD8', '#E8DAEF', '#FCF3CF'];
 
@@ -25,86 +30,100 @@ const steps = [
 
 export default function WudhuList() {
   const router = useRouter();
-  const screenWidth = Dimensions.get('window').width;
-  const cardWidth = (screenWidth - 48) / 3;
 
   return (
-    <FlatList
-      style={{ backgroundColor: '#FFFFFF', flex: 1 }} 
-      data={steps}
-      numColumns={3}
-      keyExtractor={(item, index) => index.toString()}
-      contentContainerStyle={styles.listContainer}
-      columnWrapperStyle={styles.row}
-      ListHeaderComponent={
-        <View style={styles.headerWrapper}>
-          <TouchableOpacity style={styles.backIcon} onPress={() => router.back()}>
-            <Ionicons name="arrow-back" size={26} color="#fff" />
-          </TouchableOpacity>
+    <View style={styles.container}>
+      <View style={styles.headerBar}>
+        <TouchableOpacity style={styles.backButton} onPress={() => router.back()}>
+          <Ionicons name="arrow-back" size={24} color="#fff" />
+        </TouchableOpacity>
+        <Text style={styles.headerTitle}>Tata Cara Wudhu</Text>
+      </View>
+
+      <ScrollView contentContainerStyle={styles.scrollContent}>
+        <View style={styles.headerImageContainer}>
           <Image
             source={require('../../assets/wudhu.png')}
             style={styles.headerImage}
           />
         </View>
-      }
-      renderItem={({ item, index }) => (
-        <TouchableOpacity
-          style={[styles.card, { backgroundColor: colorsArray[index % colorsArray.length], width: cardWidth }]}
-          onPress={() =>
-            router.push({ pathname: '/wudhu/detail', params: { step: item.key } })
-          }
-        >
-          <Text style={styles.title}>{item.title}</Text>
-        </TouchableOpacity>
-      )}
-    />
+        <View style={styles.grid}>
+          {steps.map((item, index) => (
+            <TouchableOpacity
+              key={index}
+              style={[styles.cardWrapper, { backgroundColor: colorsArray[index % colorsArray.length] }]}
+              onPress={() =>
+                router.push({ pathname: '/wudhu/detail', params: { step: item.key } })
+              }
+            >
+              <Text style={styles.cardText}>{item.title}</Text>
+            </TouchableOpacity>
+          ))}
+        </View>
+      </ScrollView>
+    </View>
   );
 }
 
 const styles = StyleSheet.create({
-  headerWrapper: {
-    position: 'relative',
+  container: {
+    flex: 1,
+    backgroundColor: '#FDFDFD',
   },
-  backIcon: {
-    position: 'absolute',
-    top: 40,
-    left: 16,
-    zIndex: 10,
-    backgroundColor: 'rgba(0,0,0,0.4)',
+  headerBar: {
+    backgroundColor: '#FFA726',
+    paddingTop: 50,
+    paddingBottom: 16,
+    paddingHorizontal: 16,
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  backButton: {
+    marginRight: 12,
+    backgroundColor: 'rgba(0,0,0,0.2)',
+    borderRadius: 20,
     padding: 6,
-    borderRadius: 40,
+  },
+  headerTitle: {
+    fontSize: 20,
+    color: '#fff',
+    fontWeight: 'bold',
+  },
+  scrollContent: {
+    paddingBottom: 40,
+  },
+  headerImageContainer: {
+    marginHorizontal: 16,
+    marginTop: 16,
+    marginBottom: 12,
+    borderRadius: 20,
+    overflow: 'hidden',
   },
   headerImage: {
     width: '100%',
-    height: 210,
+    height: 180,
     resizeMode: 'cover',
-    borderBottomLeftRadius: 30,
-    borderBottomRightRadius: 30,
-    marginBottom: 10,
   },
-  listContainer: {
+  grid: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
     paddingHorizontal: 16,
-    paddingBottom: 20,
-    backgroundColor: '#FFFFFF',
-  },
-  row: {
     justifyContent: 'space-between',
-    marginBottom: 12,
   },
-  card: {
+  cardWrapper: {
+    width: cardWidth,
     aspectRatio: 1,
     borderRadius: 16,
     justifyContent: 'center',
     alignItems: 'center',
-    borderWidth: 2,
-    borderColor: '#fff',
     elevation: 3,
+    marginBottom: 16,
+    padding: 8,
   },
-  title: {
-    fontSize: 15,
+  cardText: {
+    fontSize: 14,
     fontWeight: 'bold',
     color: '#3E2723',
     textAlign: 'center',
-    paddingHorizontal: 10,
   },
 });

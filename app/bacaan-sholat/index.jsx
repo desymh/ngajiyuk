@@ -22,7 +22,7 @@ const steps = [
   { title: 'Al-Fatihah', link: '/bacaan-sholat/fatihah' },
   { title: 'Surat Pendek (Juz 30)', link: '/bacaan-sholat/surat' },
   { title: 'Rukuk', link: '/bacaan-sholat/rukuk' },
-  { title: 'I\'tidal', link: '/bacaan-sholat/itidal' },
+  { title: "I'tidal", link: '/bacaan-sholat/itidal' },
   { title: 'Sujud', link: '/bacaan-sholat/sujud' },
   { title: 'Duduk Antara Dua Sujud', link: '/bacaan-sholat/duduk2sujud' },
   { title: 'Tahiyat Awal', link: '/bacaan-sholat/tahiyatawal' },
@@ -40,19 +40,16 @@ export default function BacaanSholat() {
           <Ionicons name="arrow-back" size={24} color="#fff" />
         </TouchableOpacity>
         <Text style={styles.headerTitle}>Bacaan Sholat</Text>
-        <View style={{ width: 36 }} />
       </View>
 
       <FlatList
         ListHeaderComponent={
-          <>
-            <View style={styles.imageWrapper}>
-              <Image
-                source={require('../../assets/sholat.png')}
-                style={styles.headerImage}
-              />
-            </View>
-          </>
+          <View style={styles.imageWrapper}>
+            <Image
+              source={require('../../assets/sholat.png')}
+              style={styles.headerImage}
+            />
+          </View>
         }
         data={steps}
         numColumns={2}
@@ -76,24 +73,21 @@ const styles = StyleSheet.create({
   headerBar: {
     flexDirection: 'row',
     alignItems: 'center',
-    justifyContent: 'space-between',
     backgroundColor: '#F39C12',
     paddingTop: 50,
     paddingBottom: 16,
     paddingHorizontal: 16,
-    width: '100%',
   },
   backButton: {
     backgroundColor: '#00000055',
     padding: 6,
     borderRadius: 20,
+    marginRight: 12,
   },
   headerTitle: {
     fontSize: 20,
     fontWeight: 'bold',
     color: '#fff',
-    textAlign: 'center',
-    flex: 1,
   },
   imageWrapper: {
     paddingHorizontal: 16,

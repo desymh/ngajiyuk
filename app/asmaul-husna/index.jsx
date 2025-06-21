@@ -1,20 +1,22 @@
 import React, { useEffect, useState } from 'react';
 import {
   ActivityIndicator,
+  Dimensions,
   FlatList,
   Image,
   StyleSheet,
   Text,
   TouchableOpacity,
   View,
-  Dimensions,
+  ScrollView,
 } from 'react-native';
 import { useRouter } from 'expo-router';
-import { Ionicons } from '@expo/vector-icons';
+import Ionicons from 'react-native-vector-icons/Ionicons';
 
-const colorsArray = ['#FDEBD0', '#D6EAF8', '#D5F5E3', '#FADBD8', '#E8DAEF', '#FCF3CF'];
 const screenWidth = Dimensions.get('window').width;
-const cardWidth = (screenWidth - 48) / 3;
+const cardMargin = 16;
+const cardWidth = (screenWidth - cardMargin * 3) / 3;
+const colorsArray = ['#FDEBD0', '#D6EAF8', '#D5F5E3', '#FADBD8', '#E8DAEF', '#FCF3CF'];
 
 export default function AsmaulHusna() {
   const [data, setData] = useState([]);
@@ -23,12 +25,12 @@ export default function AsmaulHusna() {
 
   useEffect(() => {
     fetch('https://asmaul-husna-api.vercel.app/api/all')
-      .then((res) => res.json())
-      .then((resJson) => {
+      .then(res => res.json())
+      .then(resJson => {
         setData(resJson.data || []);
         setLoading(false);
       })
-      .catch((err) => {
+      .catch(err => {
         console.error('Gagal memuat Asmaul Husna:', err);
         setLoading(false);
       });
@@ -44,55 +46,44 @@ export default function AsmaulHusna() {
   }
 
   return (
-    <FlatList
-      data={data}
-      numColumns={3}
-      keyExtractor={(item, index) => index.toString()}
-      contentContainerStyle={styles.gridContainer}
-      columnWrapperStyle={{ justifyContent: 'space-between' }}
-      ListHeaderComponent={
-        <View style={styles.headerWrapper}>
+    <View style={styles.container}>
+      <View style={styles.headerBar}>
+        <TouchableOpacity style={styles.backButton} onPress={() => router.back()}>
+          <Ionicons name="arrow-back" size={24} color="#fff" />
+        </TouchableOpacity>
+        <Text style={styles.headerTitle}>Asmaul Husna</Text>
+      </View>
+
+      <ScrollView contentContainerStyle={styles.scrollContent}>
+        <View style={styles.headerImageContainer}>
           <Image
             source={require('../../assets/icon-asma.png')}
             style={styles.headerImage}
             resizeMode="cover"
           />
-          <TouchableOpacity style={styles.backIcon} onPress={() => router.back()}>
-            <Ionicons name="arrow-back" size={30} color="#fff" />
-          </TouchableOpacity>
         </View>
-      }
-      renderItem={({ item, index }) => (
-        <TouchableOpacity
-          style={[styles.card, { backgroundColor: colorsArray[index % colorsArray.length] }]}
-        >
-          <Text style={styles.arab}>{item.arab}</Text>
-          <Text style={styles.latin}>{item.latin}</Text>
-          <Text style={styles.arti}>{item.arti}</Text>
-        </TouchableOpacity>
-      )}
-    />
+
+        <View style={styles.grid}>
+          {data.map((item, index) => (
+            <TouchableOpacity
+              key={index}
+              style={[styles.cardWrapper, { backgroundColor: colorsArray[index % colorsArray.length] }]}
+            >
+              <Text style={styles.arab}>{item.arab}</Text>
+              <Text style={styles.latin}>{item.latin}</Text>
+              <Text style={styles.arti}>{item.arti}</Text>
+            </TouchableOpacity>
+          ))}
+        </View>
+      </ScrollView>
+    </View>
   );
 }
 
 const styles = StyleSheet.create({
-  headerWrapper: {
-    position: 'relative',
-    marginBottom: 16,
-  },
-  headerImage: {
-    width: '100%',
-    height: 210,
-    borderBottomLeftRadius: 30,
-    borderBottomRightRadius: 30,
-  },
-  backIcon: {
-    position: 'absolute',
-    top: 40,
-    left: 20,
-    backgroundColor: '#00000055',
-    borderRadius: 20,
-    padding: 4,
+  container: {
+    flex: 1,
+    backgroundColor: '#FDFDFD',
   },
   loadingContainer: {
     flex: 1,
@@ -104,26 +95,62 @@ const styles = StyleSheet.create({
     fontSize: 16,
     color: '#888',
   },
-  gridContainer: {
-    paddingHorizontal: 12,
-    paddingBottom: 20,
-    backgroundColor: '#FFFFFF',
-  },
-  card: {
-    width: cardWidth,
-    marginBottom: 12,
-    padding: 10,
-    borderRadius: 16,
+  headerBar: {
+    backgroundColor: '#FFA726',
+    paddingTop: 50,
+    paddingBottom: 16,
+    paddingHorizontal: 16,
+    flexDirection: 'row',
     alignItems: 'center',
+  },
+  backButton: {
+    marginRight: 12,
+    backgroundColor: 'rgba(0,0,0,0.2)',
+    borderRadius: 20,
+    padding: 6,
+  },
+  headerTitle: {
+    fontSize: 20,
+    color: '#fff',
+    fontWeight: 'bold',
+  },
+  scrollContent: {
+    paddingBottom: 40,
+  },
+  headerImageContainer: {
+    marginHorizontal: 16,
+    marginTop: 16,
+    marginBottom: 12,
+    borderRadius: 20,
+    overflow: 'hidden',
+  },
+  headerImage: {
+    width: '100%',
+    height: 180,
+    resizeMode: 'cover',
+  },
+  grid: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    paddingHorizontal: 16,
+    justifyContent: 'space-between',
+  },
+  cardWrapper: {
+    width: cardWidth,
+    aspectRatio: 1,
+    borderRadius: 16,
     justifyContent: 'center',
-    minHeight: 110,
+    alignItems: 'center',
     elevation: 3,
+    marginBottom: 16,
+    padding: 8,
   },
   arab: {
     fontSize: 20,
     color: '#6A1B9A',
     fontWeight: 'bold',
     marginBottom: 4,
+    textAlign: 'center',
   },
   latin: {
     fontSize: 13,

@@ -1,37 +1,48 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import {
+  ActivityIndicator,
   FlatList,
   StyleSheet,
   Text,
   TouchableOpacity,
   View,
-  Dimensions,
   Image,
+  Dimensions,
 } from 'react-native';
 import { useRouter } from 'expo-router';
-import { Ionicons } from '@expo/vector-icons';
+import Ionicons from '@expo/vector-icons/Ionicons';
 
 const colorsArray = ['#FDEBD0', '#D6EAF8', '#D5F5E3', '#FADBD8', '#E8DAEF', '#FCF3CF'];
 const screenWidth = Dimensions.get('window').width;
 const cardWidth = (screenWidth - 48 - 8) / 2;
 
-const steps = [
-  { title: 'Niat', link: '/bacaan-sholat/niat' },
-  { title: 'Takbiratul Ihram', link: '/bacaan-sholat/takbiratul-ihram' },
-  { title: 'Doa Iftitah', link: '/bacaan-sholat/iftitah' },
-  { title: 'Al-Fatihah', link: '/bacaan-sholat/fatihah' },
-  { title: 'Surat Pendek (Juz 30)', link: '/bacaan-sholat/surat' },
-  { title: 'Rukuk', link: '/bacaan-sholat/rukuk' },
-  { title: "I'tidal", link: '/bacaan-sholat/itidal' },
-  { title: 'Sujud', link: '/bacaan-sholat/sujud' },
-  { title: 'Duduk Antara Dua Sujud', link: '/bacaan-sholat/duduk2sujud' },
-  { title: 'Tahiyat Awal', link: '/bacaan-sholat/tahiyatawal' },
-  { title: 'Tahiyat Akhir', link: '/bacaan-sholat/tahiyatakhir' },
-  { title: 'Salam', link: '/bacaan-sholat/salam' },
-];
-
-export default function BacaanSholat() {
+export default function JuzAmma() {
+  const [suratList, setSuratList] = useState([]);
+  const [loading, setLoading] = useState(true);
   const router = useRouter();
+
+  useEffect(() => {
+    fetch('https://equran.id/api/surat')
+      .then((res) => res.json())
+      .then((data) => {
+        const juz30 = data.filter((surat) => surat.nomor >= 78);
+        setSuratList(juz30);
+        setLoading(false);
+      })
+      .catch((err) => {
+        console.error('Gagal memuat daftar surat:', err);
+        setLoading(false);
+      });
+  }, []);
+
+  if (loading) {
+    return (
+      <View style={styles.loadingContainer}>
+        <ActivityIndicator size="large" color="#f39c12" />
+        <Text style={styles.loadingText}>Memuat Juz Amma...</Text>
+      </View>
+    );
+  }
 
   return (
     <View style={{ flex: 1, backgroundColor: '#FFFFFF' }}>
@@ -39,29 +50,27 @@ export default function BacaanSholat() {
         <TouchableOpacity onPress={() => router.back()} style={styles.backButton}>
           <Ionicons name="arrow-back" size={24} color="#fff" />
         </TouchableOpacity>
-        <Text style={styles.headerTitle}>Bacaan Sholat</Text>
+        <Text style={styles.headerTitle}>Juz Amma</Text>
       </View>
 
       <FlatList
         ListHeaderComponent={
           <View style={styles.imageWrapper}>
-            <Image
-              source={require('../../assets/sholat.png')}
-              style={styles.headerImage}
-            />
+            <Image source={require('../../assets/quran.png')} style={styles.headerImage} />
           </View>
         }
-        data={steps}
+        data={suratList}
         numColumns={2}
-        keyExtractor={(item, index) => index.toString()}
+        keyExtractor={(item) => item.nomor.toString()}
         contentContainerStyle={styles.gridContainer}
         columnWrapperStyle={{ justifyContent: 'space-between', marginBottom: 12 }}
         renderItem={({ item, index }) => (
           <TouchableOpacity
             style={[styles.card, { backgroundColor: colorsArray[index % colorsArray.length] }]}
-            onPress={() => router.push(item.link)}
+            onPress={() => router.push(`/juz-amma/${item.nomor}`)}
           >
-            <Text style={styles.title}>{item.title}</Text>
+            <Text style={styles.cardTitle}>{item.nama_latin}</Text>
+            <Text style={styles.cardArti}>{item.arti}</Text>
           </TouchableOpacity>
         )}
       />
@@ -71,18 +80,18 @@ export default function BacaanSholat() {
 
 const styles = StyleSheet.create({
   headerBar: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    backgroundColor: '#F39C12',
+    backgroundColor: '#FFA726',
     paddingTop: 50,
     paddingBottom: 16,
     paddingHorizontal: 16,
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 12,
   },
   backButton: {
-    backgroundColor: '#00000055',
-    padding: 6,
+    backgroundColor: 'rgba(0,0,0,0.2)',
     borderRadius: 20,
-    marginRight: 12,
+    padding: 6,
   },
   headerTitle: {
     fontSize: 20,
@@ -113,10 +122,26 @@ const styles = StyleSheet.create({
     minHeight: 110,
     elevation: 3,
   },
-  title: {
-    fontSize: 13,
+  cardTitle: {
+    fontSize: 14,
     fontWeight: 'bold',
     color: '#3E2723',
     textAlign: 'center',
+    marginBottom: 4,
+  },
+  cardArti: {
+    fontSize: 12,
+    color: '#555',
+    textAlign: 'center',
+  },
+  loadingContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  loadingText: {
+    marginTop: 10,
+    fontSize: 16,
+    color: '#888',
   },
 });

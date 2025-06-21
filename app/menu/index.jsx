@@ -15,7 +15,7 @@ import { colors, font } from '../../constants/theme';
 
 const menuItems = [
   { title: 'Doa Harian', image: require('../../assets/icon-d.png'), route: '/doa-harian', color: '#FDEBD0' },
-  { title: 'Bacaan Sholat', image: require('../../assets/icon-s.png'), route: '/bacaan-sholat', color: '#D6EAF8' },
+  { title: 'Juz Amma', image: require('../../assets/alquran.png'), route: '/juz-amma', color: '#D6EAF8' },
   { title: 'Asmaul Husna', image: require('../../assets/icon-a.png'), route: '/asmaul-husna', color: '#D5F5E3' },
   { title: 'Niat Wudhu', image: require('../../assets/icon-w.png'), route: '/wudhu', color: '#FADBD8' },
 ];

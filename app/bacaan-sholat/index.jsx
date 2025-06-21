@@ -13,7 +13,7 @@ import { Ionicons } from '@expo/vector-icons';
 
 const colorsArray = ['#FDEBD0', '#D6EAF8', '#D5F5E3', '#FADBD8', '#E8DAEF', '#FCF3CF'];
 const screenWidth = Dimensions.get('window').width;
-const cardWidth = (screenWidth - 48) / 3;
+const cardWidth = (screenWidth - 48 - 8) / 2;
 
 const steps = [
   { title: 'Niat', link: '/bacaan-sholat/niat' },
@@ -35,20 +35,27 @@ export default function BacaanSholat() {
 
   return (
     <View style={{ flex: 1, backgroundColor: '#FFFFFF' }}>
+      <View style={styles.headerBar}>
+        <TouchableOpacity onPress={() => router.back()} style={styles.backButton}>
+          <Ionicons name="arrow-back" size={24} color="#fff" />
+        </TouchableOpacity>
+        <Text style={styles.headerTitle}>Bacaan Sholat</Text>
+        <View style={{ width: 36 }} />
+      </View>
+
       <FlatList
         ListHeaderComponent={
-          <View style={styles.headerWrapper}>
-            <TouchableOpacity style={styles.backIcon} onPress={() => router.back()}>
-              <Ionicons name="arrow-back" size={26} color="#fff" />
-            </TouchableOpacity>
-            <Image
-              source={require('../../assets/icon-s.png')} 
-              style={styles.headerImage}
-            />
-          </View>
+          <>
+            <View style={styles.imageWrapper}>
+              <Image
+                source={require('../../assets/sholat.png')}
+                style={styles.headerImage}
+              />
+            </View>
+          </>
         }
         data={steps}
-        numColumns={3}
+        numColumns={2}
         keyExtractor={(item, index) => index.toString()}
         contentContainerStyle={styles.gridContainer}
         columnWrapperStyle={{ justifyContent: 'space-between', marginBottom: 12 }}
@@ -66,30 +73,42 @@ export default function BacaanSholat() {
 }
 
 const styles = StyleSheet.create({
-  headerWrapper: {
-    position: 'relative',
+  headerBar: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    backgroundColor: '#F39C12',
+    paddingTop: 50,
+    paddingBottom: 16,
+    paddingHorizontal: 16,
+    width: '100%',
+  },
+  backButton: {
+    backgroundColor: '#00000055',
+    padding: 6,
+    borderRadius: 20,
+  },
+  headerTitle: {
+    fontSize: 20,
+    fontWeight: 'bold',
+    color: '#fff',
+    textAlign: 'center',
+    flex: 1,
+  },
+  imageWrapper: {
+    paddingHorizontal: 16,
+    marginTop: 12,
     marginBottom: 16,
   },
   headerImage: {
     width: '100%',
-    height: 210,
+    height: 200,
     resizeMode: 'cover',
-    borderBottomLeftRadius: 30,
-    borderBottomRightRadius: 30,
-  },
-  backIcon: {
-    position: 'absolute',
-    top: 40,
-    left: 20,
-    backgroundColor: '#00000055',
     borderRadius: 20,
-    padding: 4,
-    zIndex: 10,
   },
   gridContainer: {
     paddingHorizontal: 16,
     paddingBottom: 20,
-    backgroundColor: '#FFFFFF',
   },
   card: {
     width: cardWidth,

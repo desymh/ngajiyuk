@@ -47,25 +47,20 @@ export default function DoaHarian() {
 
   return (
     <View style={styles.container}>
-      {/* HEADER BAR STICKY */}
       <View style={styles.headerBar}>
         <TouchableOpacity style={styles.backButton} onPress={() => router.back()}>
           <Ionicons name="arrow-back" size={24} color="#fff" />
         </TouchableOpacity>
         <Text style={styles.headerTitle}>Doa Harian</Text>
+      
       </View>
-
-      {/* SCROLLABLE BODY */}
       <ScrollView contentContainerStyle={styles.scrollContent}>
-        {/* HEADER IMAGE */}
         <View style={styles.headerImageContainer}>
           <Image
             source={require('../../assets/icon-doa.png')}
             style={styles.headerImage}
           />
         </View>
-
-        {/* 2 COLUMN LIST */}
         <View style={styles.grid}>
           {doaList.map((item, index) => (
             <TouchableOpacity

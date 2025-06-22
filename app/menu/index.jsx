@@ -85,9 +85,7 @@ export default function Menu() {
           <Text style={styles.headerTitle}>Islamic Kids</Text>
           <Text style={styles.headerSub}>kids education.</Text>
         </View>
-        <View style={styles.headerIconWrapper}>
-          <Image source={require('../../assets/splash-anak.png')} style={styles.headerIcon} />
-        </View>
+      
       </View>
       <TouchableOpacity style={styles.heroCard}>
         <ImageBackground
@@ -168,11 +166,6 @@ const styles = StyleSheet.create({
     borderRadius: 12,
     justifyContent: 'center',
     alignItems: 'center',
-  },
-  headerIcon: {
-    width: 24,
-    height: 24,
-    resizeMode: 'contain',
   },
   heroCard: {
     height: 220,

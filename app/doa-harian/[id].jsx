@@ -3,12 +3,14 @@ import {
   View,
   Text,
   StyleSheet,
-  ImageBackground,
+  Image,
   ActivityIndicator,
   ScrollView,
   TouchableOpacity,
+  Dimensions,
 } from 'react-native';
 import { useLocalSearchParams, useRouter } from 'expo-router';
+import { Ionicons } from '@expo/vector-icons';
 
 const gambarDoa = {
   'Doa Sebelum Tidur': require('../../assets/sebelum_tidur.png'),
@@ -20,7 +22,7 @@ const gambarDoa = {
   'Doa Ketika Bercermin': require('../../assets/bercermin.png'),
   'Doa Masuk Rumah': require('../../assets/masuk_rumah.png'),
   'Doa Keluar Rumah': require('../../assets/keluar_rumah.png'),
-  'Doa Setelah Membaca Al-Quran': require('../../assets/sesudah_ngaji.png'),
+  'Doa Setelah Membaca Al-Qur\'an': require('../../assets/sesudah_ngaji.png'),
   'Doa Sebelum Membaca Al-Quran': require('../../assets/sebelum_ngaji.png'),
   'Doa Memohon Ilmu Yang Bermanfaat': require('../../assets/ilmu.png'),
   'Doa Sebelum Wudhu': require('../../assets/sebelum-w.png'),
@@ -28,14 +30,12 @@ const gambarDoa = {
   'Doa Hendak Bepergian': require('../../assets/bepergian.png'),
   'Doa Menyambut Pagi hari': require('../../assets/pagi.png'),
   'Doa Menyambut Sore Hari': require('../../assets/sore.png'),
-  'Doa Sebelum Wudhu': require('../../assets/sebelum-w.png'),
   'Doa Memohon Rezeki': require('../../assets/rezeki.png'),
   'Doa Selamat dari Kedengkian': require('../../assets/dengki.png'),
   'Doa Sebelum Mandi': require('../../assets/sebelum_mandi.png'),
   'Doa Ketika Sampai di Tempat Tujuan': require('../../assets/tujuan.png'),
   'Doa Menjelang Sholat Shubuh': require('../../assets/menjelang-subuh.png'),
   'Doa Memohon Terlepas dari Kesulitan': require('../../assets/kesulitan.png'),
-  default: require('../../assets/anak-berdoa.png'),
 };
 
 export default function DetailDoa() {
@@ -76,102 +76,86 @@ export default function DetailDoa() {
   }
 
   const imageSource = gambarDoa[doa.judul] || gambarDoa.default;
-
   return (
-    <ScrollView style={styles.scroll}>
-      <View style={styles.imageWrapper}>
-        <ImageBackground source={imageSource} style={styles.headerImage} imageStyle={styles.headerImageStyle}>
-          <View style={styles.overlay} />
-          <TouchableOpacity onPress={() => router.back()} style={styles.backButton}>
-            <Text style={styles.backArrow}>←</Text>
-          </TouchableOpacity>
-          <Text style={styles.title}>{doa.judul}</Text>
-        </ImageBackground>
+   <View style={styles.container}>
+      <View style={styles.headerBar}>
+        <TouchableOpacity onPress={() => router.back()} style={styles.backButton}>
+          <Ionicons name="arrow-back" size={24} color="#fff" />
+        </TouchableOpacity>
+        <Text style={styles.headerTitle}>Doa Harian</Text>
+        <View style={{ width: 36 }} />
       </View>
 
-      <View style={styles.card}>
+      <ScrollView contentContainerStyle={styles.content}>
+        <Text style={styles.judul}>{doa.judul}</Text>
         <Text style={styles.arab}>{doa.arab}</Text>
         <Text style={styles.latin}>{doa.latin}</Text>
         <Text style={styles.arti}>{doa.arti}</Text>
-      </View>
-    </ScrollView>
+        <Image source={imageSource} style={styles.image} />
+      </ScrollView>
+    </View>
   );
 }
 
 const styles = StyleSheet.create({
-  scroll: {
+  container: {
     flex: 1,
-    backgroundColor: '#fffde7',
+    backgroundColor: '#FFF5E1',
   },
-  imageWrapper: {
-    borderBottomLeftRadius: 30,
-    borderBottomRightRadius: 30,
-    overflow: 'hidden',
-  },
-  headerImage: {
-    width: '100%',
-    height: 280,
-    justifyContent: 'flex-end',
-    padding: 20,
-  },
-  headerImageStyle: {
-    resizeMode: 'cover',
-  },
-  overlay: {
-    ...StyleSheet.absoluteFillObject,
-    backgroundColor: 'rgba(0,0,0,0.3)',
+  headerBar: {
+    backgroundColor: '#FFA726',
+    paddingTop: 50,
+    paddingBottom: 16,
+    paddingHorizontal: 16,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
   },
   backButton: {
-    position: 'absolute',
-    top: 40,
-    left: 20,
-    backgroundColor: '#ffffffcc',
-    width: 36,
-    height: 36,
-    borderRadius: 18,
-    alignItems: 'center',
-    justifyContent: 'center',
-    zIndex: 2,
+    backgroundColor: 'rgba(0,0,0,0.2)',
+    borderRadius: 20,
+    padding: 6,
   },
-  backArrow: {
-    fontSize: 22,
-    color: '#333',
-  },
-  title: {
-    fontSize: 22,
+  headerTitle: {
+    fontSize: 20,
     fontWeight: 'bold',
     color: '#fff',
-    textAlign: 'center',
-    backgroundColor: 'rgba(0,0,0,0.3)',
-    paddingVertical: 6,
-    borderRadius: 10,
   },
-  card: {
-    backgroundColor: '#fff',
-    margin: 16,
-    borderRadius: 16,
+  content: {
+    alignItems: 'center',
     padding: 20,
-    elevation: 3,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.2,
-    shadowRadius: 4,
+    paddingBottom: 40,
+  },
+  judul: {
+    fontSize: 26,
+    fontWeight: 'bold',
+    textAlign: 'center',
+    color: '#333',
+    marginTop: 40,
+    marginBottom: 20,
   },
   arab: {
     fontSize: 26,
-    textAlign: 'right',
+    textAlign: 'center',
     color: '#2c3e50',
-    marginBottom: 12,
+    marginBottom: 16,
   },
   latin: {
     fontStyle: 'italic',
-    color: '#7f8c8d',
-    marginBottom: 10,
+    color: '#555',
+    textAlign: 'center',
+    marginBottom: 12,
   },
   arti: {
     fontSize: 16,
     color: '#34495e',
     textAlign: 'center',
+    marginBottom: 24,
+  },
+  image: {
+    width: Dimensions.get('window').width * 0.75,
+    height: Dimensions.get('window').width * 0.75,
+    resizeMode: 'contain',
   },
   loadingContainer: {
     flex: 1,
